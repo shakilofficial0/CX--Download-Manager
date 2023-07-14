@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow, shell } = require('electron')
+const { app, BrowserWindow, shell, Tray, Menu, Notification } = require('electron')
 
 const path = require('path')
 const {ipcMain} = require('electron')
@@ -20,11 +20,15 @@ function createWindow () {
   win.loadFile('src/index.html')
 
   ipcMain.on('closeApp', (event, arg) => {
-	  app.quit();
+	event.preventDefault();
+	win.hide();
+	new Notification({title: 'CyberX+ Download Manager', body: 'CyberX+ Download Manager is still running in the background.', icon: path.join(__dirname, 'src/assets/img/logo/240px.png')}).show();
+
   });
 
   ipcMain.on('minimizeApp', (event, arg) => {
-	  win.minimize();
+	event.preventDefault();
+	win.hide();
   }
   );
 
@@ -41,10 +45,40 @@ function createWindow () {
 		  console.log('openExternal: ' + arg);
 		  shell.openExternal(arg);
 	  });
+	tray = new Tray(path.join(__dirname, 'src/assets/img/logo/240px.png'))
+	const contextMenu = Menu.buildFromTemplate([
+		{ label: 'Show App', click:  function(){
+			win.show();
+		}
+		},
+		{ label: 'Quit', click:  function(){
+			app.isQuiting = true;
+			app.quit();
+		}
+	},
+	])
+	tray.setToolTip('CyberX+ Download Manager')
+	tray.setContextMenu(contextMenu)
+	win.on('minimize',function(event){
+		event.preventDefault();
+		win.hide();
+	}
+	);
+
+	tray.on('double-click', function(event){
+		win.show();
+	}
+	);
+
+
+
 }
 
 app.whenReady().then(() => {
 	createWindow()
+	if (process.platform == 'win32') {
+		app.setAppUserModelId('CX+ Download Manager');
+	  }
 }
 )
 
