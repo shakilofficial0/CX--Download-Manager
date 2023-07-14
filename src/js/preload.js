@@ -9,7 +9,16 @@ contextBridge.exposeInMainWorld(
     "api", {
         closeApp: () => {
 			ipcRenderer.send('closeApp');
-		}
+		},
+        minimizeApp: () => {
+            ipcRenderer.send('minimizeApp');
+        },
+        maximizeApp: () => {
+            ipcRenderer.send('maximizeApp');
+        },
+        openExternal: (url) => {
+            ipcRenderer.send('openExternal', url);
+        }
     }
 );
 

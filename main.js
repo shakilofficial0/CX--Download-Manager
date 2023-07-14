@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, shell } = require('electron')
 
 const path = require('path')
 const {ipcMain} = require('electron')
@@ -8,6 +8,7 @@ function createWindow () {
 	width: 800,
 	height: 600,
 	frame: false,
+	icon: path.join(__dirname, 'src/assets/img/logo/240px.png'),
 	webPreferences: {
 	  preload: path.join(__dirname, 'src/js/preload.js'),
 	  devTools: true
@@ -18,7 +19,26 @@ function createWindow () {
 
   ipcMain.on('closeApp', (event, arg) => {
 	  app.quit();
-  })
+  });
+
+  ipcMain.on('minimizeApp', (event, arg) => {
+	  win.minimize();
+  }
+  );
+
+  ipcMain.on('maximizeApp', (event, arg) => {
+	  if (win.isMaximized()) {
+		win.restore();
+	  }
+	  else {
+		win.maximize();
+	  }
+	});
+
+	  ipcMain.on('openExternal', (event, arg) => {
+		  console.log('openExternal: ' + arg);
+		  shell.openExternal(arg);
+	  });
 }
 
 app.whenReady().then(() => {
