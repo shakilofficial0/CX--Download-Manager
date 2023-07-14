@@ -5,8 +5,10 @@ const path = require('path')
 const {ipcMain} = require('electron')
 function createWindow () {
 	  const win = new BrowserWindow({
-	width: 800,
+	width: 1200,
 	height: 600,
+	minWidth: 800,
+	minHeight: 600,
 	frame: false,
 	icon: path.join(__dirname, 'src/assets/img/logo/240px.png'),
 	webPreferences: {
