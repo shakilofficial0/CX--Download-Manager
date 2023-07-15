@@ -1,19 +1,23 @@
 
 const { app, BrowserWindow, shell, Tray, Menu, Notification } = require('electron')
+const url = require("url");
+
 
 const path = require('path')
-const {ipcMain} = require('electron')
+const {ipcMain, dialog} = require('electron')
+let win;
 function createWindow () {
-	  const win = new BrowserWindow({
+	win = new BrowserWindow({
 	width: 1200,
 	height: 600,
 	minWidth: 800,
 	minHeight: 600,
 	frame: false,
 	icon: path.join(__dirname, 'src/assets/img/logo/240px.png'),
-	webPreferences: {
-	  preload: path.join(__dirname, 'src/js/preload.js'),
-	  devTools: true
+	webPreferences: {			
+	  	devTools: true,
+	  	nodeIntegration: true,
+	  	contextIsolation: false
 	}
   })
 
@@ -32,6 +36,18 @@ function createWindow () {
   }
   );
 
+  ipcMain.handle('download-location', async () => {
+    const { canceled, filePaths } = await dialog.showOpenDialog(win, {
+      properties: ['openDirectory']
+    })
+    if (canceled) {
+      return
+    } else {
+      return filePaths[0]
+    }
+  })
+
+
   ipcMain.on('maximizeApp', (event, arg) => {
 	  if (win.isMaximized()) {
 		win.restore();
@@ -41,10 +57,6 @@ function createWindow () {
 	  }
 	});
 
-	  ipcMain.on('openExternal', (event, arg) => {
-		  console.log('openExternal: ' + arg);
-		  shell.openExternal(arg);
-	  });
 	tray = new Tray(path.join(__dirname, 'src/assets/img/logo/240px.png'))
 	const contextMenu = Menu.buildFromTemplate([
 		{ label: 'Show App', click:  function(){
@@ -69,6 +81,8 @@ function createWindow () {
 		win.show();
 	}
 	);
+
+	
 
 
 

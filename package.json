@@ -1,16 +1,18 @@
 {
   "dependencies": {
-    "@tabler/icons": "^2.25.0",
-    "bootstrap": "^5.3.0",
-    "mt-files-downloader": "^0.2.5",
-    "sweetalert2": "^11.7.16"
+    "mt-files-downloader": "^0.2.5"
   },
   "name": "cx-plus-download-manager",
   "version": "1.0.0",
   "description": "Simple Fast Download Manager",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron --trace-deprecation .",
+    "build": "electron-builder -wml",
+    "build-win": "electron-builder -w",
+    "build-mac": "electron-builder -m",
+    "build-linux": "electron-builder -l",
+    "dist": "build"
   },
   "keywords": [
     "downloader",
@@ -18,10 +20,32 @@
     "multipart",
     "ui"
   ],
+  "build": {
+    "appId": "com.codebumble.cyberxplusdownloadmanager",
+    "productName": "CyberX+ Download Manager",
+    "copyright": "Copyright © 2023 Codebumble Inc",
+    "mac": {
+      "icon": "src/assets/img/logo/132px.icns",
+      "category": "public.app-category.utilities"
+   },
+   "win": {
+      "icon": "src/assets/img/logo/4380px.png"
+    },
+    "linux": {
+      "icon": "src/assets/img/logo/240px.png"
+    },
+    "directories": {
+      "buildResources": "src/assets/img/logo" 
+    }
+  },
   "author": "Shakil Ahmed",
   "license": "MIT",
   "devDependencies": {
+    "electron": "^25.3.0",
+    "electron-builder": "^24.4.0",
+    "electron-download-tf": "^4.3.4",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "zeltice-mt-downloader": "^1.1.3"
   }
 }

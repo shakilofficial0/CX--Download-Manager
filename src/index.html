@@ -40,12 +40,16 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="./assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/select2/select2.css" />
 
     <!-- Page CSS -->
     <style>
 
       .drag-panel{
         -webkit-app-region: drag;
+      }
+      ::-webkit-scrollbar {
+          display: none;
       }
     </style>
     <!-- Helpers -->
@@ -167,6 +171,12 @@
                       <a class="dropdown-item" href="javascript:void(0);" data-language="pt">
                         <i class="fi fi-pt fis rounded-circle me-1 fs-3"></i>
                         <span class="align-middle">Portuguese</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);" data-language="pt">
+                        <i class="fi fi-bd fis rounded-circle me-1 fs-3"></i>
+                        <span class="align-middle">Bangla</span>
                       </a>
                     </li>
                   </ul>
@@ -462,14 +472,14 @@
                     </li>
                     <li>
                       <button class="dropdown-item" type="button" id="minBtn">
-                        <i class="ti ti-settings me-2 ti-sm"></i>
+                        <i class="ti ti-minimize me-2 ti-sm"></i>
                         <span class="align-middle">Minimize</span>
                       </button>
                     </li>
 
                     <li>
                       <button class="dropdown-item" type="button" id="maxBtn">
-                        <i class="ti ti-settings me-2 ti-sm"></i>
+                        <i class="ti ti-window-maximize me-2 ti-sm"></i>
                         <span class="align-middle">Maximize</span>
                       </button>
                     </li>
@@ -497,51 +507,180 @@
             <div class="container-xxl flex-grow-1 container-p-y ml-3">
               <h2>Downloads</h2>
               <hr>
-              <div class="col-9">
-                <div class="row ms-3">
-                    <div class="card shadow-none border border-primary mb-3">
-                      <div class="card-body">
-                        <!-- // left side -->
-                        <div class="card-title header-elements">
-                          
-                          <div class="card-header-elements ms-auto">
-                            <i class="ti ti-player-play ti-sm"></i>
-                            <i class="ti ti-trash ti-sm"></i>
-                          </div>
-                        </div>
+              <div class="row">
+                <!-- Left Side -->
+                <div class="col-9">
+                  <div class="row ms-3">
+                    <div class="divider text-start">
+                      <div class="divider-text">Downloading</div>
+                    </div>
 
-                        <div class="row">
-                          <div class="col-2 m-2 avatar avatar-xl">
-                            <img src="./assets/img/icons/extension-icons/ZIP.png" alt class="h-auto" />
+                    <div class="Downloading">
+                      <div class="card shadow-none border border-primary mb-3">
+                        <div class="card-body">
+                          <!-- // left side -->
+                          <div class="card-title header-elements">
+                            
+                            <div class="card-header-elements ms-auto">
+                              <i class="ti ti-player-pause ti-sm"></i>
+                              <i class="ti ti-trash ti-sm"></i>
+                            </div>
                           </div>
-                          <!-- // right side -->
-                          <div class="col-9">
-                            <!-- File Info -->
-                            <span class="fw-semibold d-block">File Name: <span class="fw-semibold">Windows_iso_file_sndkajk.iso</span></span>
-                            
-                            <div class="d-flex">
-                              <span class="fw-semibold d-block">File Size: 2.5 GB</span>
-                              <span class="fw-semibold d-block ms-auto">Download Speed: 2.5 MB/s</span>
+
+                          <div class="row">
+                            <div class="col-2 m-2 avatar avatar-xl">
+                              <img src="./assets/img/icons/extension-icons/ZIP.png" alt class="h-auto" />
                             </div>
-                            <!-- / File Info -->
-                            <div class="d-flex">
-                                
-                                <span class="fw-semibold d-block">Downloaded: 1.5 GB</span>
-                                <span class="fw-semibold d-block mb-3 ms-auto">Time Left: 2h 30m</span>
+                            <!-- // right side -->
+                            <div class="col-9">
+                              <!-- File Info -->
+                              <span class="fw-semibold d-block">File Name: <span class="fw-semibold">Windows_iso_file_sndkajk.iso</span></span>
+                              
+                              <div class="d-flex">
+                                <span class="fw-semibold d-block">File Size: 2.5 GB</span>
+                                <span class="fw-semibold d-block ms-auto">Download Speed: 2.5 MB/s</span>
+                              </div>
+                              <!-- / File Info -->
+                              <div class="d-flex">
+                                  
+                                  <span class="fw-semibold d-block">Downloaded: 1.5 GB</span>
+                                  <span class="fw-semibold d-block mb-3 ms-auto">Time Left: 2h 30m</span>
+                              </div>
+                              
+                              <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
                             </div>
-                            
-                            <div class="progress">
-                              <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+
                           </div>
 
                         </div>
                       </div>
                     </div>
+
+                    <div class="divider text-start">
+                      <div class="divider-text">Paused</div>
+                    </div>
+
+                    <div class="Paused">
+                      <div class="card shadow-none border border-warning mb-3">
+                        <div class="card-body">
+                          <!-- // left side -->
+                          <div class="card-title header-elements">
+                            <div class="card-header-elements ms-auto">
+                              <i class="ti ti-player-play ti-sm"></i>
+                              <i class="ti ti-trash ti-sm"></i>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-2 m-2 avatar avatar-xl">
+                              <img src="./assets/img/icons/extension-icons/ZIP.png" alt class="h-auto" />
+                            </div>
+                            <!-- // right side -->
+                            <div class="col-9">
+                              <!-- File Info -->
+                              <span class="fw-semibold d-block text-truncate">File Name: <span class="fw-bold" >Windows_iso_file_gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggsndkajk.iso</span></span>
+                              
+                              <div class="d-flex">
+                                <span class="fw-semibold d-block">File Size: 2.5 GB</span>
+                                <span class="fw-semibold d-block ms-auto">Download Speed: ---</span>
+                              </div>
+                              <!-- / File Info -->
+                              <div class="d-flex">
+                                  
+                                  <span class="fw-semibold d-block">Downloaded: 1.5 GB</span>
+                                  <span class="fw-semibold d-block mb-3 ms-auto">Time Left: ---</span>
+                              </div>
+                              
+                              <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="divider text-start">
+                      <div class="divider-text">Completed</div>
+                    </div>
+
+                    <div class="Completed">
+                      <div class="card shadow-none border border-success mb-3">
+                        <div class="card-body">
+                          <!-- // left side -->
+                          <div class="card-title header-elements">
+                            <div class="card-header-elements ms-auto">
+                              <i class="ti ti-folder ti-sm"></i>
+                              <i class="ti ti-trash ti-sm"></i>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-2 m-2 avatar avatar-xl">
+                              <img src="./assets/img/icons/extension-icons/ISO.png" alt class="h-auto" />
+                            </div>
+                            <!-- // right side -->
+                            <div class="col-9">
+                              <!-- File Info -->
+                              <span class="fw-semibold d-block text-truncate">File Name: <span class="fw-bold" >Windows_iso_file_gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggsndkajk.iso</span></span>
+                              
+                              <div class="d-flex">
+                                <span class="fw-semibold d-block">File Size: 2.5 GB</span>
+                                <span class="fw-semibold d-block ms-auto mb-1">Time: 2h 30m</span>
+                              </div>
+
+                              <div class="d-flex">
+                                <span class="d-block text-truncate">Link: <span class="text-primary">https://codebumble.net/test.1gb</span></span>
+                                
+                              </div>
+
+                              
+                              
+                              
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-              </div>
-              <div class="col-3">
-                
+                <!-- Right Side -->
+                <div class="col-3 mt-5">
+                  <div class="card">
+                    <div class="card-header text-center">
+                      <span class="fw-bold text-center h5">Quick Tools</span>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="demo-inline-spacing d-block ms-3">
+                          <button type="button" class="btn btn-icon btn-label-primary" data-bs-toggle="modal"
+                          data-bs-target="#addNewDownload">
+                            <span class="ti ti-plus" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Add To Download"></span>
+                          </button>
+                          <button type="button" class="btn btn-icon btn-label-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Download All Paused">
+                            <span class="ti ti-player-play"></span>
+                          </button>
+                          <button type="button" class="btn btn-icon btn-label-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Pause All Download">
+                            <span class="ti ti-player-pause"></span>
+                          </button>
+                          <button type="button" class="btn btn-icon btn-label-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Clear All Completed">
+                            <span class="ti ti-trash"></span>
+                          </button>
+                          <button type="button" class="btn btn-icon btn-label-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Clear The List">
+                            <span class="ti ti-trash-x"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- / Content -->
@@ -583,6 +722,81 @@
 
       <!-- Drag Target Area To SlideIn Menu On Small Screens -->
       <div class="drag-target"></div>
+
+      <div class="modal fade" id="addNewDownload" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+          <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="text-center mb-4">
+                <h3 class="mb-2">New Download</h3>
+                <p class="text-muted">Add New Download Queue Manually From Here</p>
+              </div>
+              <form id="addNewDownload" class="row g-3" onsubmit="return false">
+                
+                  <div class="col-12">
+                    <label class="form-label" for="download-url">File Url</label>
+                    <input type="text" id="download-url" class="form-control form-control-sm" placeholder="Enter The Full Url" required/>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label" for="download-name">File Name (Optional)</label>
+                    <input type="text" id="download-name" class="form-control form-control-sm" placeholder="John Doe" />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label" for="download-location">Download Location</label>
+                    <input type="text" class="form-control form-control-sm" id="download-location" webkitdirectory="true" directory multiple value="" required/>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label" for="download-header">Additional Header (JSON)</label>
+                      <input
+                        type="text"
+                        id="download-header"
+                        class="form-control form-control-sm"
+                        placeholder="{}"
+                        value="{}" />
+                  </div>
+                  
+                  <!-- Divider -->
+                  <div class="divider text-center">
+                    <div class="divider-text">Optional</div>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label" for="download-username">Username</label>
+                      <input
+                        type="text"
+                        id="download-username"
+                        class="form-control form-control-sm"
+                        placeholder="Admin123"/>
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label" for="download-password">Password</label>
+                      <input
+                        type="text"
+                        id="download-password"
+                        class="form-control form-control-sm"
+                        placeholder="**********"/>
+                  </div>
+
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                    <button
+                      type="reset"
+                      class="btn btn-label-secondary btn-reset"
+                      data-bs-dismiss="modal"
+                      aria-label="Close">
+                      Cancel
+                    </button>
+                  </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
     <!-- / Layout wrapper -->
 
@@ -593,6 +807,9 @@
     <script src="./assets/vendor/js/bootstrap.js"></script>
     <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="./assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="./assets/vendor/libs/typeahead-js/typeahead.js"></script>
+
+    
 
     <script src="./assets/vendor/libs/hammer/hammer.js"></script>
 
@@ -600,10 +817,10 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-
+    <script src="./assets/vendor/libs/select2/select2.js"></script>
     <!-- Main JS -->
     <script src="./assets/js/main.js"></script>
-    <script src="./appActions.js"></script>
+    <script type="module" src="./appActions.js"></script>
 
     <!-- Page JS -->
   </body>
