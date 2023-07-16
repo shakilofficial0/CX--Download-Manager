@@ -1,0 +1,14 @@
+{"stopped":[
+	{"name":"","size":"", "percent":"", "status":"", "speed":"", "eta":"", "downloaded_size":"","link":"", "path":"", "date_time":"", "extention":""}
+],
+"paused":[
+	{"name":"","size":"", "percent":"", "status":"", "speed":"", "eta":"", "downloaded_size":"","link":"", "path":"", "date_time":"","extention":""}
+],
+"completed":[
+	{"name":"","size":"", "status":"", "time_taken":"","link":"", "path":"", "date_time":"","extention":""}
+],
+"downloading":
+[
+	{"name":"","size":"", "percent":"", "status":"", "speed":"", "eta":"", "downloaded_size":"","link":"", "path":"", "date_time":"","extention":""}
+]
+}

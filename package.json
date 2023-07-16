@@ -1,13 +1,10 @@
 {
-  "dependencies": {
-    "mt-files-downloader": "^0.2.5"
-  },
   "name": "cx-plus-download-manager",
   "version": "1.0.0",
   "description": "Simple Fast Download Manager",
   "main": "main.js",
   "scripts": {
-    "start": "electron --trace-deprecation .",
+    "start": "electron --trace-deprecation --trace-warnings .",
     "build": "electron-builder -wml",
     "build-win": "electron-builder -w",
     "build-mac": "electron-builder -m",
@@ -36,16 +33,13 @@
     },
     "directories": {
       "buildResources": "src/assets/img/logo"
-
     },
-    
     "includeSubNodeModules": true
-
-
   },
   "author": "Shakil Ahmed",
   "license": "MIT",
   "devDependencies": {
+    "easydl": "^1.0.3",
     "electron": "^25.3.0",
     "electron-builder": "^24.4.0",
     "electron-download-tf": "^4.3.4",

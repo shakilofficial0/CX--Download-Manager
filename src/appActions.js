@@ -111,7 +111,7 @@ internetAvailable({
 
 				// update version.json
 				update_info.last_update = new Date().toLocaleDateString();
-				//fs.writeFileSync(path.join(__dirname,'..','system', 'version.json'), JSON.stringify(update_info));
+				fs.writeFileSync(path.join(__dirname,'..','system', 'version.json'), JSON.stringify(update_info));
 
 				
 			} catch (error) {
