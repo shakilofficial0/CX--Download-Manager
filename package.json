@@ -27,16 +27,21 @@
     "mac": {
       "icon": "src/assets/img/logo/132px.icns",
       "category": "public.app-category.utilities"
-   },
-   "win": {
+    },
+    "win": {
       "icon": "src/assets/img/logo/4380px.png"
     },
     "linux": {
-      "icon": "src/assets/img/logo/240px.png"
+      "icon": "src/assets/img/logo/4380px.png"
     },
     "directories": {
-      "buildResources": "src/assets/img/logo" 
-    }
+      "buildResources": "src/assets/img/logo"
+
+    },
+    
+    "includeSubNodeModules": true
+
+
   },
   "author": "Shakil Ahmed",
   "license": "MIT",
@@ -44,6 +49,7 @@
     "electron": "^25.3.0",
     "electron-builder": "^24.4.0",
     "electron-download-tf": "^4.3.4",
+    "internet-available": "^1.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
     "zeltice-mt-downloader": "^1.1.3"

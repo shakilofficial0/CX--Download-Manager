@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="./assets/vendor/libs/node-waves/node-waves.css" />
     <link rel="stylesheet" href="./assets/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/animate-css/animate.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/sweetalert2/sweetalert2.css" />
 
     <!-- Page CSS -->
     <style>
@@ -480,7 +482,7 @@
                     <li>
                       <button class="dropdown-item" type="button" id="maxBtn">
                         <i class="ti ti-window-maximize me-2 ti-sm"></i>
-                        <span class="align-middle">Maximize</span>
+                        <span class="align-middle">Fullscreen</span>
                       </button>
                     </li>
 
@@ -732,7 +734,7 @@
                 <h3 class="mb-2">New Download</h3>
                 <p class="text-muted">Add New Download Queue Manually From Here</p>
               </div>
-              <form id="addNewDownload" class="row g-3" onsubmit="return false">
+              <form id="addNewDownload" class="row g-3">
                 
                   <div class="col-12">
                     <label class="form-label" for="download-url">File Url</label>
@@ -780,7 +782,7 @@
                   </div>
 
                   <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                    <button type="submit" class="btn btn-primary me-sm-3 me-1" >Submit</button>
                     <button
                       type="reset"
                       class="btn btn-label-secondary btn-reset"
@@ -818,9 +820,11 @@
 
     <!-- Vendors JS -->
     <script src="./assets/vendor/libs/select2/select2.js"></script>
+    <script src="./assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
     <!-- Main JS -->
     <script src="./assets/js/main.js"></script>
     <script type="module" src="./appActions.js"></script>
+    <script type="module" src="./downloaderAction.js"></script>
 
     <!-- Page JS -->
   </body>
