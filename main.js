@@ -4,6 +4,8 @@ const url = require("url");
 const path = require('path')
 const {ipcMain, dialog} = require('electron')
 const fs = require('fs');
+const Downloader = require('easydl');
+const utilities = require('./src/utilities.js');
 let win;
 
 function createWindow () {
@@ -16,43 +18,43 @@ function createWindow () {
 	}
 	else {
 
-		var settings = {"settings": 
-		{
-			"language": "en",
-			"location": {
-				"general": path.join(os.homedir(), 'Downloads'),
-				"music": path.join(os.homedir(), 'Downloads', 'Music'),
-				"video": path.join(os.homedir(), 'Downloads', 'Video'),
-				"image": path.join(os.homedir(), 'Downloads', 'Image'),
-				"document": path.join(os.homedir(), 'Downloads', 'Document'),
-				"program": path.join(os.homedir(), 'Downloads', 'Program'),
-				"compressed": path.join(os.homedir(), 'Downloads', 'Compressed'),
-				"torrent": path.join(os.homedir(), 'Downloads', 'Torrent'),
-				"other": path.join(os.homedir(), 'Downloads', 'Other'),
-				"temp": path.join(os.homedir(), 'Downloads', 'Temp'),
-			},
-			"threads": 4,
-			"maxSpeed": 0,
-			"user-agent": "CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
-			"retry": 3,
-			"retryDelay": 1000,
-			"timeout": 10000,
-			"proxy": "Default",
-			"proxyType": "",
-			"proxyUrl": "",
-			"proxyPort": "",
-			"proxyUsername": "",
-			"proxyPassword": "",
-			"proxySocks": "",
-			"proxySocksVersion": "",
-			"ignoreProxy": ["localhost"],
-			"fileTypes": ["zip", "rar", "avi", "mp4", "iso", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "exe", "msi", "apk", "torrent", "mp3", "wav", "flac", "ogg", "jpg", "jpeg", "png", "gif", "bmp", "webp", "svg", "ico", "txt", "html", "css", "js", "php", "json", "xml", "md", "csv", "ts", "tsx", "jsx", "py", "java", "c", "cpp", "h", "hpp", "cs", "go", "rb", "sh", "ps1", "psm1", "psd1", "bat", "cmd", "vbs", "vbe", "wsf", "wsh", "ps1xml", "psc1", "msh", "msh1", "msh2", "mshxml", "msh1xml", "msh2xml", "scf", "lnk", "inf", "reg", "url", "m3u", "m3u8", "flv", "ogg", "webm", "mkv", "mpg", "mpeg", "3gp", "3g2", "m4v", "wmv", "mov", "tar.gz"],
-			
-		}
-	};
-		fs.writeFileSync(settings_file, JSON.stringify(settings, null, 4));
-		console.log('Settings file created.');
-}
+			var settings = {"settings": 
+			{
+				"language": "en",
+				"location": {
+					"general": path.join(os.homedir(), 'Downloads'),
+					"music": path.join(os.homedir(), 'Downloads', 'Music'),
+					"video": path.join(os.homedir(), 'Downloads', 'Video'),
+					"image": path.join(os.homedir(), 'Downloads', 'Image'),
+					"document": path.join(os.homedir(), 'Downloads', 'Document'),
+					"program": path.join(os.homedir(), 'Downloads', 'Program'),
+					"compressed": path.join(os.homedir(), 'Downloads', 'Compressed'),
+					"torrent": path.join(os.homedir(), 'Downloads', 'Torrent'),
+					"other": path.join(os.homedir(), 'Downloads', 'Other'),
+					"temp": path.join(os.homedir(), 'Downloads', 'Temp'),
+				},
+				"threads": 4,
+				"maxSpeed": 0,
+				"user-agent": "CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
+				"retry": 3,
+				"retryDelay": 1000,
+				"timeout": 10000,
+				"proxy": "Default",
+				"proxyType": "",
+				"proxyUrl": "",
+				"proxyPort": "",
+				"proxyUsername": "",
+				"proxyPassword": "",
+				"proxySocks": "",
+				"proxySocksVersion": "",
+				"ignoreProxy": ["localhost"],
+				"fileTypes": ["zip", "rar", "avi", "mp4", "iso", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "exe", "msi", "apk", "torrent", "mp3", "wav", "flac", "ogg", "jpg", "jpeg", "png", "gif", "bmp", "webp", "svg", "ico", "txt", "html", "css", "js", "php", "json", "xml", "md", "csv", "ts", "tsx", "jsx", "py", "java", "c", "cpp", "h", "hpp", "cs", "go", "rb", "sh", "ps1", "psm1", "psd1", "bat", "cmd", "vbs", "vbe", "wsf", "wsh", "ps1xml", "psc1", "msh", "msh1", "msh2", "mshxml", "msh1xml", "msh2xml", "scf", "lnk", "inf", "reg", "url", "m3u", "m3u8", "flv", "ogg", "webm", "mkv", "mpg", "mpeg", "3gp", "3g2", "m4v", "wmv", "mov", "tar.gz"],
+				
+			}
+		};
+			fs.writeFileSync(settings_file, JSON.stringify(settings, null, 4));
+			console.log('Settings file created.');
+	}
 	// Check version file is present or not
 
 	const version_file = path.join(__dirname, 'system','version.json');
@@ -87,15 +89,15 @@ function createWindow () {
 
   });
 
-  ipcMain.on('minimizeApp', (event, arg) => {
-	event.preventDefault();
-	win.hide();
-  }
-  );
+	ipcMain.on('minimizeApp', (event, arg) => {
+		event.preventDefault();
+		win.hide();
+	}
+	);
 
-  process.on('warning', (warning) => {
-    console.log(warning.stack);
-});
+	process.on('warning', (warning) => {
+		console.log(warning.stack);
+	});
 
   ipcMain.handle('download-location', async () => {
     const { canceled, filePaths } = await dialog.showOpenDialog(win, {
@@ -125,8 +127,31 @@ function createWindow () {
 		}
 		},
 		{ label: 'Quit', click:  function(){
-			app.isQuiting = true;
-			app.quit();
+			var data = JSON.parse(fs.readFileSync(path.join(__dirname, 'system','download_list.json')));
+			if(data.downloading.length > 0){
+				var options = {
+					type: 'question',
+					buttons: ['Yes', 'No'],
+					defaultId: 2,
+					title: 'CyberX+ Download Manager',
+					message: 'Are you sure you want to quit?',
+					detail: 'There are still active downloads. If you quit now, the downloads will be cancelled.',
+				  };
+				  dialog.showMessageBox(null, options).then((response) => {
+					if (response.response == 0){
+						data.stopped = data.stopped.concat(data.downloading);
+						data.downloading = [];
+						fs.writeFileSync(path.join(__dirname, 'system','download_list.json'), JSON.stringify(data, null, 4));
+						app.isQuiting = true;
+						app.quit();
+					}
+				  });
+
+			} else {
+				app.isQuiting = true;
+				app.quit();
+			}
+
 		}
 	},
 	])
@@ -142,6 +167,41 @@ function createWindow () {
 		win.show();
 	}
 	);
+
+	// Downloader Action
+	
+	var array_downloader = {};
+	ipcMain.handle('download-add-queue', (event, arg) => {
+		console.log(arg);
+		var dler = new Downloader(arg.url, arg.temp_location,{
+			connections: arg.connections,
+			httpOptions:  {"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", 'accept-enconding': '*', 'accept-language': 'en-US,en;q=0.9', 'cache-control': 'no-cache', 'pragma': 'no-cache', 'dnt': '1',
+		}},
+			maxRetry: arg.maxRetry,
+			existBehavior: arg.existBehavior,
+			reportInterval: arg.reportInterval,
+		});
+
+		array_downloader[arg.init_time] = dler;
+		array_downloader[arg].start();
+		return arg.init_time;
+	});
+
+	
+
+	ipcMain.handle('download-pause', (event, arg) => {
+		array_downloader[arg].pause();
+		return true;
+	});
+
+	ipcMain.handle('download-data', (event, arg) => {
+		var data = {"status": array_downloader[arg]._status, "progress": array_downloader[arg].totalProgress, "size": array_downloader[arg].size};
+		return data;
+	});
+
+
+
+
 
 		
 }

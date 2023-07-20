@@ -1,9 +1,7 @@
 const path = require('path');
-function humanReadableByte(size){
-	if(!isNaN(size)){
-		return "Unknown";
-	}
-
+const url = require('url');
+const humanReadableByte=(size)=>{
+	
 	if(size < 1024){
 		return size + " Byte(s)";
 	} else if(size < 1048576){
@@ -17,7 +15,7 @@ function humanReadableByte(size){
 	}
 }
 
-function getEta(size, downloaded, speed){
+const getEta=(size, downloaded, speed)=>{
 	if(speed == 0){
 		return "∞";
 	} else {
@@ -25,7 +23,7 @@ function getEta(size, downloaded, speed){
 	}
 }
 
-function humanReadableTime(seconds){
+const humanReadableTime=(seconds)=>{
 	if(seconds < 60){
 		return seconds.toFixed(0) + " sec";
 	} else if(seconds < 3600){
@@ -45,19 +43,23 @@ function humanReadableTime(seconds){
 	}
 }
 
-function pathToFilename(file_path){
+const pathToFilename=(file_path)=>{
 	return path.basename(file_path);
 }
 
-function humanReadablePercent(percent){
+const urlToFilename=(url_given)=>{
+	return path.basename(url.parse(url_given).pathname);
+}
+
+const humanReadablePercent=(percent)=>{
 	return percent.toFixed(2);
 }
 
-function filenameToExtention(filename){
+const filenameToExtention=(filename)=>{
 	return path.extname(filename);
 }
 
-function nameToJsonIndex(data, name){
+const nameToJsonIndex=(data, name)=>{
 	for(var i = 0; i < data.length; i++){
 		if(data[i].name == name){
 			return i;
@@ -66,4 +68,95 @@ function nameToJsonIndex(data, name){
 	return -1;
 }
 
+const extToIcon=(ext)=>{
+	ext = ext.toLowerCase();
+	console.log(ext);
+	if(ext == ".ai"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'AI.png');
+	} else if(ext == ".avi"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'AVI.png');
+	} else if(ext == ".bmp"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'BMP.png');
+	} else if(ext == ".crd"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'CRD.png');
+	} else if(ext == ".csv" ){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'CSV.png');
+	} else if(ext == ".dll"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'DLL.png');
+	} else if(ext == ".doc"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'DOC.png');
+	} else if(ext == ".docx"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'DOCX.png');
+	} else if(ext == ".dwg"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'DWG.png');
+	} else if(ext == ".eps"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'EPS.png');
+	} else if(ext == ".exe"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'EXE.png');
+	} else if(ext == ".flv"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'FLV.png');
+	} else if(ext == ".gif"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'GIFF.png');
+	} else if(ext == ".html"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'HTML.png');
+	} else if(ext == ".iso"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'ISO.png');
+	} else if(ext == ".java"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'JAVA.png');
+	} else if(ext == ".jpg" || ext == ".jpeg"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'JPG.png');
+	} else if(ext == ".mdb"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'MDB.png');
+	} else if(ext == ".mid"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'MID.png');
+	} else if(ext == ".mov"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'MOV.png');
+	} else if(ext == ".mp3"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'MP3.png');
+	} else if(ext == ".mp4" || ext == ".m4v" || ext == ".mkv"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'MP4.png');
+	} else if(ext == ".mpg" || ext == ".mpeg"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'MPEG.png');
+	} else if(ext == ".pdf"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'PDF.png');
+	} else if(ext == ".png"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'PNG.png');
+	} else if(ext == ".ppt" || ext == ".pptx"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'PPT.png');
+	} else if(ext == ".ps"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'PS.png');
+	} else if(ext == ".psd"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'PSD.png');
+	} else if(ext == ".pub"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'PUB.png');
+	} else if(ext == ".rar"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'RAR.png');
+	} else if(ext == ".raw"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'RAW.png');
+	} else if(ext == ".rss"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'RSS.png');
+	} else if(ext == ".svg"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'SVG.png');
+	} else if(ext == ".tiff"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'TIFF.png');
+	} else if(ext == ".txt"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'TXT.png');
+	} else if(ext == ".wav"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'WAV.png');
+	} else if(ext == ".wma"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'WMA.png');
+	} else if(ext == ".xml"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'XML.png');
+	} else if(ext == ".xls" || ext == ".xlsx"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'XLS.png');
+	} else if(ext == ".zip"){
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'ZIP.png');
+	} else {
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'ZIP.png');
+	}
+}
 
+
+
+
+module.exports = { humanReadableByte, getEta, humanReadableTime, pathToFilename, humanReadablePercent, filenameToExtention, nameToJsonIndex, urlToFilename, extToIcon}
