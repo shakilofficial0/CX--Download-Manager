@@ -171,32 +171,43 @@ function createWindow () {
 	// Downloader Action
 	
 	var array_downloader = {};
-	ipcMain.handle('download-add-queue', (event, arg) => {
+	ipcMain.handle('download-add-queue', async(event, arg) => {
 		console.log(arg);
-		var dler = new Downloader(arg.url, arg.temp_location,{
-			connections: arg.connections,
-			httpOptions:  {"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", 'accept-enconding': '*', 'accept-language': 'en-US,en;q=0.9', 'cache-control': 'no-cache', 'pragma': 'no-cache', 'dnt': '1',
-		}},
-			maxRetry: arg.maxRetry,
-			existBehavior: arg.existBehavior,
-			reportInterval: arg.reportInterval,
-		});
-
-		array_downloader[arg.init_time] = dler;
-		array_downloader[arg].start();
+		try{
+		fs.mkdirSync(arg.temp_location, { recursive: true });
+		var data = await downloader(arg);
+		array_downloader[arg.init_time] = data;
 		return arg.init_time;
+		} catch(err) {
+			console.log(err);
+			return false;
+		}
+		
 	});
 
 	
 
 	ipcMain.handle('download-pause', (event, arg) => {
-		array_downloader[arg].pause();
-		return true;
+		if(arg in array_downloader.keys()) {
+			array_downloader[arg].destroy();
+			return true;
+		} else {
+			return false;
+		}
 	});
 
-	ipcMain.handle('download-data', (event, arg) => {
-		var data = {"status": array_downloader[arg]._status, "progress": array_downloader[arg].totalProgress, "size": array_downloader[arg].size};
+	ipcMain.handle('download-data', async(event, arg) => {
+		// var data = {"status": array_downloader[arg]._status, "progress": array_downloader[arg].totalProgress, "size": array_downloader[arg].size};
+		// return data;
+		var data = {};
+		for (i in array_downloader) {
+			data[i] = {"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress, "size": array_downloader[i].size};
+		}
 		return data;
+	});
+
+	ipcMain.handle('download-array', (event, arg) => {
+		return Object.keys(array_downloader);
 	});
 
 
@@ -227,4 +238,19 @@ app.on('activate', () => {
   }
 }
 )
+
+async function downloader(arg){
+	var dler = new Downloader(uel=arg.url, dest=arg.temp_location,{
+		connections: arg.connections,
+		httpOptions:  {"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", 'accept-enconding': '*', 'accept-language': 'en-US,en;q=0.9', 'cache-control': 'no-cache', 'pragma': 'no-cache', 'dnt': '1'
+	}},
+		maxRetry: arg.maxRetry,
+		existBehavior: arg.existBehavior,
+		reportInterval: arg.reportInterval,
+	});
+
+	
+	dler.start();
+	return dler;
+}
 

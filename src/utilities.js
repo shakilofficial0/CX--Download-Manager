@@ -47,8 +47,15 @@ const pathToFilename=(file_path)=>{
 	return path.basename(file_path);
 }
 
+
+
 const urlToFilename=(url_given)=>{
-	return path.basename(url.parse(url_given).pathname);
+	a= path.basename(url.parse(url_given).pathname);
+	// check extension has or not
+	if(a.indexOf('.') == -1){
+		a = a + '.unknown';
+	}
+	return a;
 }
 
 const humanReadablePercent=(percent)=>{

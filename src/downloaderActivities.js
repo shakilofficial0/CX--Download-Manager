@@ -1,9 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
-const http = require('http');
-const url = require('url');
-const Downloader = require('easydl');
 const utilities = require('./utilities.js');
 const { ipcRenderer } = require('electron');
 
@@ -55,10 +51,7 @@ downloadBtn.addEventListener('click', (event) => {
 		return;
 	} else {
 		var temp_location = system_var.location.temp;
-
-		if(fs.existsSync(temp_location) == false){
-			fs.mkdirSync(temp_location);
-		}
+		
 
 		
 		var init_time = new Date().getTime();
@@ -66,20 +59,14 @@ downloadBtn.addEventListener('click', (event) => {
 		var temp_location = path.join(temp_location, filename);
 
 		
-			var headers = {"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", 'accept-enconding': '*', 'accept-language': 'en-US,en;q=0.9', 'cache-control': 'no-cache', 'pragma': 'no-cache', 'dnt': '1',
-		}};
-		// const dler = new Downloader(action_url, temp_location, {
-		// connections: 10,
-		// httpOptions: {
-		// 	headers: {
-		// 	"User-Agent": "EasyDL",
-		// 	},
-		// },
-		// maxRetry: 10,
-		// existBehavior: "overwrite",
-		// reportInterval: 600,
 
-		// })
+		
+
+		
+		var headers = {"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", 'accept-enconding': '*', 'accept-language': 'en-US,en;q=0.9', 'cache-control': 'no-cache', 'pragma': 'no-cache', 'dnt': '1',
+		}};
+
+		console.log();
 
 		ipcRenderer.invoke('download-add-queue', {
 			url: action_url,
@@ -96,50 +83,27 @@ downloadBtn.addEventListener('click', (event) => {
 			reportInterval: 1000,
 			connections: 10,
 		}).then((result) => {
-			downloadarray.unshift(result);
-
-
-			var looper = setInterval(() => {
-				ipcRenderer.invoke('download-data', result).then((result_o) => {
-					console.log(result_o);
-					if(result_o.status == 'finished'){
-						clearInterval(looper);
-					}
-				});
-
-				
-			}
-			, 600);
+			console.log(downloadarray);
 		}
 		);
 
 
 		
 
-		
-
-
 
 		
-
-		
-		
-
-		
-
-		
-		
-
-		
-
-		
-
-
-
 	}
 
 	
 });
+
+setInterval(() => {
+			
+	ipcRenderer.invoke('download-data', 'download-data').then((result) => {
+		console.log(result);
+	});
+
+}, 1000);
 
 // Module Rewrite
 // Path: node_modules\easydl\dist\index.js
