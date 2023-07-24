@@ -1,8 +1,1 @@
-{
-    "stopped": [
-    ],
-    "paused": [],
-    "completed": [
-    ],
-    "downloading": []
-}
+{"failed":{},"queue":{},"stopped":{},"paused":{},"completed":{},"downloading":{}}

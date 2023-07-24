@@ -51,18 +51,10 @@ downloadBtn.addEventListener('click', (event) => {
 		return;
 	} else {
 		var temp_location = system_var.location.temp;
-		
-
-		
 		var init_time = new Date().getTime();
 		var filename = filename || utilities.urlToFilename(action_url);
 		var temp_location = path.join(temp_location, filename);
 
-		
-
-		
-
-		
 		var headers = {"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", 'accept-enconding': '*', 'accept-language': 'en-US,en;q=0.9', 'cache-control': 'no-cache', 'pragma': 'no-cache', 'dnt': '1',
 		}};
 
@@ -83,15 +75,10 @@ downloadBtn.addEventListener('click', (event) => {
 			reportInterval: 1000,
 			connections: 10,
 		}).then((result) => {
-			console.log(downloadarray);
+			console.log(result);
 		}
 		);
-
-
-		
-
-
-		
+	
 	}
 
 	

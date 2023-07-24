@@ -8,6 +8,11 @@ const Downloader = require('easydl');
 const utilities = require('./src/utilities.js');
 let win;
 
+const version_file = path.join(__dirname, 'system','version.json');
+var download_list_file = path.join(__dirname, 'system','download_list.json');
+var download_list = JSON.parse(fs.readFileSync(download_list_file));
+var array_downloader = {};
+
 function createWindow () {
 
 	// Check settings file is present or not
@@ -57,7 +62,8 @@ function createWindow () {
 	}
 	// Check version file is present or not
 
-	const version_file = path.join(__dirname, 'system','version.json');
+	
+
 	if (fs.existsSync(version_file)) {
 		console.log('Version file exists.');
 	} else {
@@ -170,14 +176,13 @@ function createWindow () {
 
 	// Downloader Action
 	
-	var array_downloader = {};
+	
 	ipcMain.handle('download-add-queue', async(event, arg) => {
-		console.log(arg);
 		try{
-		fs.mkdirSync(arg.temp_location, { recursive: true });
-		var data = await downloader(arg);
-		array_downloader[arg.init_time] = data;
-		return arg.init_time;
+			check_file_exist(arg);
+			var data = await downloader(arg);
+			array_downloader[arg.init_time] = data;
+			return arg.init_time;
 		} catch(err) {
 			console.log(err);
 			return false;
@@ -201,7 +206,7 @@ function createWindow () {
 		// return data;
 		var data = {};
 		for (i in array_downloader) {
-			data[i] = {"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress, "size": array_downloader[i].size};
+			data[i] = {"resume": array_downloader[i].isResume,"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress, "size": array_downloader[i].size};
 		}
 		return data;
 	});
@@ -253,4 +258,10 @@ async function downloader(arg){
 	dler.start();
 	return dler;
 }
+
+function updateDownloadList(download_list_file, download_list){
+	fs.writeFileSync(download_list_file, JSON.stringify(download_list));
+}
+
+
 
