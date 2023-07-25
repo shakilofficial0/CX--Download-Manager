@@ -1,11 +1,12 @@
 
 const { app, BrowserWindow, shell, Tray, Menu, Notification } = require('electron')
-const url = require("url");
+const request = require('request');
 const path = require('path')
 const {ipcMain, dialog} = require('electron')
 const fs = require('fs');
 const Downloader = require('easydl');
 const utilities = require('./src/utilities.js');
+const helper = require('./helper.js');
 let win;
 
 const version_file = path.join(__dirname, 'system','version.json');
@@ -179,10 +180,17 @@ function createWindow () {
 	
 	ipcMain.handle('download-add-queue', async(event, arg) => {
 		try{
-			check_file_exist(arg);
-			var data = await downloader(arg);
-			array_downloader[arg.init_time] = data;
+			if(helper.check_file_exist(arg, download_list_file, download_list)){
+				console.log('File added to queue.');
+			// var data = await downloader(arg);
+			// array_downloader[arg.init_time] = data;
 			return arg.init_time;
+
+			}else {
+				return false;
+			}
+			
+			
 		} catch(err) {
 			console.log(err);
 			return false;
@@ -202,11 +210,10 @@ function createWindow () {
 	});
 
 	ipcMain.handle('download-data', async(event, arg) => {
-		// var data = {"status": array_downloader[arg]._status, "progress": array_downloader[arg].totalProgress, "size": array_downloader[arg].size};
-		// return data;
+		
 		var data = {};
 		for (i in array_downloader) {
-			data[i] = {"resume": array_downloader[i].isResume,"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress, "size": array_downloader[i].size};
+			data[i] = {"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress, "size": array_downloader[i].size};
 		}
 		return data;
 	});
@@ -245,10 +252,9 @@ app.on('activate', () => {
 )
 
 async function downloader(arg){
-	var dler = new Downloader(uel=arg.url, dest=arg.temp_location,{
+	var dler = new Downloader(url=arg.url, dest=arg.temp_location,{
 		connections: arg.connections,
-		httpOptions:  {"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", 'accept-enconding': '*', 'accept-language': 'en-US,en;q=0.9', 'cache-control': 'no-cache', 'pragma': 'no-cache', 'dnt': '1'
-	}},
+		httpOptions:  JSON.parse(arg.headers),
 		maxRetry: arg.maxRetry,
 		existBehavior: arg.existBehavior,
 		reportInterval: arg.reportInterval,
@@ -259,9 +265,8 @@ async function downloader(arg){
 	return dler;
 }
 
-function updateDownloadList(download_list_file, download_list){
-	fs.writeFileSync(download_list_file, JSON.stringify(download_list));
-}
+
+
 
 
 

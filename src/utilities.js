@@ -77,7 +77,6 @@ const nameToJsonIndex=(data, name)=>{
 
 const extToIcon=(ext)=>{
 	ext = ext.toLowerCase();
-	console.log(ext);
 	if(ext == ".ai"){
 		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'AI.png');
 	} else if(ext == ".avi"){
