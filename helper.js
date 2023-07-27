@@ -15,6 +15,7 @@ const check_file_exist=(arg, download_list_file, download_list)=>{
 		url: arg.url,
 		headers: JSON.parse(arg.headers).headers
 	}, function (error, response, body) {
+		console.log('Got response from server.');
 		if (error) {
 			console.log(error);
 		} else {
@@ -63,15 +64,19 @@ const check_file_exist=(arg, download_list_file, download_list)=>{
 						}
 						
 					} else {
+						console.log('File not found in server.');
 						folderCreate(arg.temp_location,{"content_length": content_length, "content_type": content_type, "last_modified": last_modified});
 						var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext};
 						download_list.downloading[arg.init_time] = data;
 						updateDownloadList(download_list_file, download_list);
 
 					}
+				} else {
+					console.log('File already downloading.');
+					return false;
 				}
 
-				
+				console.log('Returning true.');
 				return true;
 
 			} else {
@@ -87,6 +92,7 @@ const check_file_exist=(arg, download_list_file, download_list)=>{
 					}
 					
 				} else {
+					console.log('File not found in server.2');
 					folderCreate(arg.temp_location,{"content_length": 0, "content_type": "", "last_modified": ""});
 					var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext};
 					download_list.downloading[arg.init_time] = data;

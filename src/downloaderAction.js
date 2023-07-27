@@ -178,31 +178,21 @@ downloadBtn.addEventListener('click', (event) => {
 			sub_html +='<i class="ti ti-trash ti-sm"></i>';
 			sub_html +='</div>';
 			sub_html +='</div>';
-
 			sub_html +='<div class="row">';
 			sub_html +='<div class="col-2 m-2 avatar avatar-xl">';
 			sub_html +='<img src="'+utilities.extToIcon(data.extention)+'" alt class="h-auto" />';
 			sub_html +='</div>';
 			sub_html +='<div class="col-9">';
 			sub_html +='<span class="fw-semibold d-block text-truncate">File Name: <span class="fw-bold" >'+data.name+'</span></span>';
-				  
 			sub_html +='<div class="d-flex">';
 			sub_html +='<span class="fw-semibold d-block">File Size: '+data.size+'</span>';
 			sub_html +='<span class="fw-semibold d-block ms-auto mb-1">Time: '+data.time_taken+'</span>';
 			sub_html +='</div>';
-
 			sub_html +='<div class="d-flex">';
-			sub_html +='<span class="d-block text-truncate">Link: <span class="text-primary">'+data.link+'</span></span>';
-					
+			sub_html +='<span class="d-block text-truncate">Link: <span class="text-primary">'+data.link+'</span></span>';	
 			sub_html +='</div>';
-
-				  
-				  
-				  
 			sub_html +='</div>';
-
 			sub_html +='</div>';
-
 			sub_html +='</div>';
 			sub_html +='</div>';
 
