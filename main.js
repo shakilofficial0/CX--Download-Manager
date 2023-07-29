@@ -229,7 +229,7 @@ function createWindow () {
 							if(locationUpdate(arg, {"content_length": content_length, "content_type": content_type, "last_modified": last_modified}, download_list) != false){
 							var temp_p = path.parse(arg.temp_location);
 							arg.filename = temp_p.name + temp_p.ext;
-							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": temp_p.ext};
+							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": temp_p.ext, "location": arg.location};
 							download_list.downloading[arg.init_time] = data;
 							updateDownloadList(download_list_file, download_list);
 							} else {
@@ -239,7 +239,7 @@ function createWindow () {
 						} else {
 							console.log('File not found in server.');
 							folderCreate(arg.temp_location,{"content_length": content_length, "content_type": content_type, "last_modified": last_modified});
-							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext};
+							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
 							download_list.downloading[arg.init_time] = data;
 							updateDownloadList(download_list_file, download_list);
 	
@@ -255,7 +255,7 @@ function createWindow () {
 				} else {
 					if(fs.existsSync(arg.temp_location)){
 						if(locationUpdate(arg, {"content_length": 0, "content_type": "", "last_modified": ""}) != false){
-							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext};
+							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
 							download_list.downloading[arg.init_time] = data;
 							updateDownloadList(download_list_file, download_list);
 	
@@ -267,7 +267,7 @@ function createWindow () {
 					} else {
 						console.log('File not found in server.2');
 						folderCreate(arg.temp_location,{"content_length": 0, "content_type": "", "last_modified": ""});
-						var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext};
+						var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
 						download_list.downloading[arg.init_time] = data;
 						updateDownloadList(download_list_file, download_list);
 						return arg.temp_location;
@@ -293,6 +293,7 @@ function createWindow () {
 		
 		var data = {};
 		for (i in array_downloader) {
+			console.log(array_downloader[i]);
 			data[i] = {"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress.percentage, "content_length": array_downloader[i].size, "speed": array_downloader[i].totalProgress.speed, "downloaded": array_downloader[i].totalProgress.bytes, "filename": download_list.downloading[i].filename, "ext": download_list.downloading[i].ext, "url": download_list.downloading[i].url, "merge_percent": array_downloader[i]._margeStatus.percentage, "init_time": download_list.downloading[i].init_time};
 		}
 		return data;
@@ -352,6 +353,7 @@ async function downloader(arg){
 		maxRetry: arg.maxRetry,
 		existBehavior: arg.existBehavior,
 		reportInterval: arg.reportInterval,
+		location: arg.location
 	});
 
 	

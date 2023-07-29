@@ -158,7 +158,7 @@ const extToIcon=(ext)=>{
 	} else if(ext == ".zip"){
 		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'ZIP.png');
 	} else {
-		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'ZIP.png');
+		return path.join(__dirname, 'assets', 'img', 'icons', 'extension-icons', 'Other.png');
 	}
 }
 

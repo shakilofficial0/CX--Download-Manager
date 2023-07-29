@@ -154,6 +154,7 @@ setInterval(() => {
 	ipcRenderer.invoke('download-data', 'download-data').then((result) => {
 
 		for (var i in result) {
+			console.log(result[i]);
 			var section = document.getElementById('dl-'+i);
 			var init = {};
 			init[i] = result[i];
@@ -162,7 +163,7 @@ setInterval(() => {
 					createPausedSection(init);
 				} else if(result[i].status == 'stopped'){
 					createStoppedSection(init);
-				} else if(result[i].status == 'completed'){
+				} else if(result[i].status == 'finished'){
 					createCompleteSection(init);
 				} else if(result[i].status == 'started'){
 					createDownloadingSection(init);
