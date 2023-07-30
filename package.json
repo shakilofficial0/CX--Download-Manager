@@ -26,7 +26,8 @@
       "category": "public.app-category.utilities"
     },
     "win": {
-      "icon": "src/assets/img/logo/4380px.png"
+      "icon": "src/assets/img/logo/4380px.png",
+      "target": "nsis"
     },
     "linux": {
       "icon": "src/assets/img/logo/4380px.png"
@@ -34,7 +35,17 @@
     "directories": {
       "buildResources": "src/assets/img/logo"
     },
-    "includeSubNodeModules": true
+    "includeSubNodeModules": true,
+    "nsis":
+    {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": true,
+      "runAfterFinish": true
+    }
   },
   "author": "Shakil Ahmed",
   "license": "MIT",

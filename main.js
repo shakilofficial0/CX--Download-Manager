@@ -13,6 +13,8 @@ var download_list_file = path.join(__dirname, 'system','download_list.json');
 var download_list = JSON.parse(fs.readFileSync(download_list_file));
 var array_downloader = {};
 
+
+
 function createWindow () {
 
 	// Check settings file is present or not
@@ -317,6 +319,15 @@ function createWindow () {
 		return Object.keys(array_downloader);
 	});
 
+	win.on('close', function (event) {
+		if(!app.isQuiting){
+			event.preventDefault();
+			win.hide();
+		}
+	
+		return false;
+	});
+
 
 
 
@@ -325,10 +336,22 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-	createWindow()
+
+	const singleInstanceLock = app.requestSingleInstanceLock();
 	if (process.platform == 'win32') {
 		app.setAppUserModelId('CX+ Download Manager');
 	  }
+	if (!singleInstanceLock) {
+		new Notification({title: 'CyberX+ Download Manager', body: 'CyberX+ Download Manager is still running in the background.', icon: path.join(__dirname, 'src/assets/img/logo/240px.png')}).show();
+		app.quit();
+		return;
+	}
+
+	createWindow()
+	app.setLoginItemSettings({
+		openAtLogin: true    
+	})
+	
 }
 )
 
@@ -339,12 +362,16 @@ app.on('window-all-closed', () => {
 }
 )
 
+
+
 app.on('activate', () => {
 	  if (BrowserWindow.getAllWindows().length === 0) {
 	createWindow()
   }
 }
 )
+
+
 
 async function downloader(arg){
 	var dler = new Downloader(url=arg.url, dest=arg.temp_location,{
