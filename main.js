@@ -17,6 +17,7 @@ var array_downloader = {};
 
 
 
+
 function createWindow () {
 
 	// Check settings file is present or not
@@ -180,7 +181,7 @@ function createWindow () {
   });
 
   server.listen(23087, () => console.log('Server ready'));
-
+  clearDumb();
   ipcMain.on('closeApp', (event, arg) => {
 	event.preventDefault();
 	win.hide();
@@ -311,6 +312,33 @@ function createWindow () {
 		}
 	});
 
+	ipcMain.handle('download-resume', async(event, arg) => {
+
+		var data = download_list.paused[arg];
+		data.init_time = new Date().getTime();
+		data.status = "queued";
+		var result =downlod_check(data, {"headers": {"content-length": data.content_length, "content-type": data.content_type, "last-modified": data.last_modified}});
+		if(result == false){
+			return false;
+		}
+		data.temp_location = result;
+		try{
+			data.headers = JSON.stringify(data.headers);
+			var datar = await downloader(data);
+
+			array_downloader[data.init_time] = datar;
+			delete download_list.paused[arg];
+			data.headers = JSON.parse(data.headers);
+			download_list.downloading[data.init_time] = data;
+			updateDownloadList(download_list_file, download_list);
+			return true;
+
+		} catch(err) {
+			console.log(err);
+			return false;
+		}
+	});
+
 	ipcMain.handle('download-data', async(event, arg) => {
 		
 		var data = {};
@@ -322,12 +350,18 @@ function createWindow () {
 
 	ipcMain.handle('download-completed', (event, arg) => {
 		if(Object.keys(array_downloader).includes(''+arg)) {
+			
 			download_list.completed[arg] = download_list.downloading[arg];
 			download_list.completed[arg]['time_taken'] = (new Date().getTime() - download_list.completed[arg].init_time)/1000;
 			delete download_list.downloading[arg];
 			delete array_downloader[arg];
 			updateDownloadList(download_list_file, download_list);
+
 			new Notification({title: 'CyberX+ Download Manager', body: 'Download Finished! File Name: '+download_list.completed[arg].filename, icon: path.join(__dirname, 'src/assets/img/logo/240px.png')}).show();
+			fs.rm(download_list.completed[arg].temp_location, { recursive: true , force: true}, (err) => {
+				updateDumb(download_list.completed[arg].temp_location)
+
+			});
 			return download_list.completed[arg]['time_taken'];
 		} else {
 			return false;
@@ -610,6 +644,32 @@ function downlod_check(arg, response){
 			return arg.temp_location;
 		}
 	}
+}
+
+function updateDumb(data){
+	var dumb = JSON.parse(fs.readFileSync(path.join(__dirname, 'system','dumb.json')));
+	var init_time = new Date().getTime();
+	dumb[init_time] = {"temp_location": data};
+	fs.writeFileSync(path.join(__dirname, 'system','dumb.json'), JSON.stringify(dumb));
+	return;
+}
+
+
+function clearDumb(){
+	var dumb = JSON.parse(fs.readFileSync(path.join(__dirname, 'system','dumb.json')));
+	var new_dumb = {};
+	for (var i in dumb) {
+		fs.rm(dumb[i].temp_location, { recursive: true }, (err) => {
+			if (err) {
+				console.log(err);
+				new_dumb[i] = dumb[i];
+			}
+		});
+		delete dumb[i];
+	}
+	fs.writeFileSync(path.join(__dirname, 'system','dumb.json'), JSON.stringify(new_dumb));
+	return;
+
 }
 
 

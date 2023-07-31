@@ -262,7 +262,7 @@ function createPausedSection(arg){
 			sub_html +='<div class="card-body">';
 			sub_html +='<div class="card-title header-elements">';
 			sub_html +='<div class="card-header-elements ms-auto" id="dl-status-'+index+'">';
-			sub_html +='<i class="ti ti-player-play ti-sm" dl-data="'+index+'"></i>';
+			sub_html +='<i class="ti ti-player-play ti-sm" dl-data="'+index+'" onclick="resumeDownload('+index+')"></i>';
 			sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'"></i>';
 			sub_html +='</div>';
 			sub_html +='</div>';
@@ -453,4 +453,14 @@ function pauseDownload(id){
 		
 	});
 
+}
+
+function resumeDownload(id){
+	var place = document.getElementById("dl-"+id);
+	ipcRenderer.invoke('download-resume', id).then((result) => {
+		if(result == true){
+			place.remove();
+		}
+		
+	});
 }
