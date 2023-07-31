@@ -3,6 +3,7 @@ const path = require('path');
 const utilities = require('./utilities.js');
 const { ipcRenderer } = require('electron');
 const request = require('request');
+const { create } = require('domain');
 
 
 
@@ -152,9 +153,9 @@ downloadBtn.addEventListener('click', (event) => {
 setInterval(() => {
 			
 	ipcRenderer.invoke('download-data', 'download-data').then((result) => {
+		
 
 		for (var i in result) {
-			console.log(result[i]);
 			var section = document.getElementById('dl-'+i);
 			var init = {};
 			init[i] = result[i];
@@ -398,7 +399,7 @@ function createDownloadingSection(arg){
 				sub_html +='<div class="card-body">';
 				sub_html +='<div class="card-title header-elements">';
 				sub_html +='<div class="card-header-elements ms-auto" id="dl-status-'+index+'">';
-				sub_html +='<i class="ti ti-player-play ti-sm" dl-data="'+index+'"></i>';
+				sub_html +='<i class="ti ti-player-pause ti-sm" onclick="pauseDownload('+index+')"></i>';
 				sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'"></i>';
 				sub_html +='</div>';
 				sub_html +='</div>';
@@ -433,4 +434,23 @@ function createDownloadingSection(arg){
 	}
 	var download_list_html = document.getElementById('Downloading');
 	download_list_html.innerHTML = sub_html + download_list_html.innerHTML;
+}
+
+function pauseDownload(id){
+
+
+	
+	var place = document.getElementById("dl-"+id);
+	
+	ipcRenderer.invoke('download-pause', id).then((result) => {
+		if(result == true){
+			place.remove();
+			// update list
+			var download_list = JSON.parse(fs.readFileSync(download_list_file));
+			createPausedSection(download_list.paused);
+
+		}
+		
+	});
+
 }

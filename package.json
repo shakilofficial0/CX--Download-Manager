@@ -36,8 +36,7 @@
       "buildResources": "src/assets/img/logo"
     },
     "includeSubNodeModules": true,
-    "nsis":
-    {
+    "nsis": {
       "oneClick": false,
       "perMachine": true,
       "allowToChangeInstallationDirectory": true,
@@ -55,10 +54,10 @@
     "electron-download-tf": "^4.3.4",
     "internet-available": "^1.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6",
-    "zeltice-mt-downloader": "^1.1.3"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "easydl": "^1.0.3"
+    "easydl": "^1.0.3",
+    "express": "^4.18.2"
   }
 }

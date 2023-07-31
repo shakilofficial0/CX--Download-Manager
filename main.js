@@ -6,10 +6,12 @@ const {ipcMain, dialog} = require('electron')
 const fs = require('fs');
 const Downloader = require('easydl');
 const utilities = require('./src/utilities.js');
+const express = require('express');
 let win;
 
 const version_file = path.join(__dirname, 'system','version.json');
 var download_list_file = path.join(__dirname, 'system','download_list.json');
+const system_var = JSON.parse(fs.readFileSync(path.join(__dirname,'system', 'settings.json'), 'utf8')).settings;
 var download_list = JSON.parse(fs.readFileSync(download_list_file));
 var array_downloader = {};
 
@@ -89,6 +91,95 @@ function createWindow () {
   })
 
   win.loadFile('src/index.html')
+
+  const server = express();
+  server.use(express.json());
+  server.post('/download-add', async function(r, response){
+	
+	if(r.body == "" || r.body == undefined){
+		response.send({"status": false, "message": "Data is required."});
+		return;
+	}
+	var data = r.body;
+
+	if(data.url == "" || data.url == undefined){
+		response.send({"status": false, "message": "URL is required."});
+		return;
+	}
+
+	if(data.filename == "" || data.filename == undefined){
+		response.send({"status": false, "message": "Filename is required."});
+		return;
+	}
+
+	data["temp_location"] = path.join(system_var.location.temp, data.filename);
+	data["init_time"] = new Date().getTime();
+	data["headers"]["user-agent"] = system_var["user-agent"];
+	data["headers"]["accept"] = "*/*";
+	data["headers"]["accept-encoding"] = "gzip, deflate, br";
+	data["headers"]["accept-language"] = "en-US,en;q=0.9";
+	data["headers"]["cache-control"] = "no-cache";
+	data["headers"]["pragma"] = "no-cache";
+	data["headers"]["sec-ch-ua"] = '"Google Chrome";v="95", "Chromium";v="95", ";Not A Brand";v="99"';
+	data["headers"]["sec-ch-ua-mobile"] = "?0";
+	data["headers"]["sec-ch-ua-platform"] = '"Windows"';
+	data["headers"]["dnt"] = "1";
+
+	data["headers"] = JSON.stringify({"headers": data["headers"]});
+
+	
+
+	
+
+	data["connections"] = system_var.threads;
+	data["maxRetry"] = system_var.retry;
+	data["existBehavior"] = "overwrite";
+	data["reportInterval"] = 600;
+	data["location"] = system_var.location.general;
+	data["username"] = "";
+	data["password"] = "";
+	data["status"] = "queued";
+
+	// request action
+	
+	var req = request({
+		url: data.url,
+		method: 'HEAD',
+		headers: JSON.parse(data.headers).headers
+	}, async function (err, res, body) {
+		
+		
+		var result =downlod_check(data, {"headers": res.headers});
+		if(result == false){
+			
+			response.send({"status": false, "message": "File already downloading."});
+			return;
+		} else {
+			data["temp_location"] = result;
+			
+			try{
+				var datar = await downloader(data);
+				array_downloader[data.init_time] = datar;
+				response.send({"status": true, "message": "Download added to queue."});
+				new Notification({title: 'CyberX+ Download Manager', body: 'Download Added! File Name: '+data.filename, icon: path.join(__dirname, 'src/assets/img/logo/240px.png')}).show();
+				return;
+	
+			} catch(err) {
+				console.log(err);
+				response.send({"status": false, "message": "Error occured."});
+				return;
+			}
+
+			
+		}
+
+	});
+
+	
+
+  });
+
+  server.listen(23087, () => console.log('Server ready'));
 
   ipcMain.on('closeApp', (event, arg) => {
 	event.preventDefault();
@@ -194,87 +285,7 @@ function createWindow () {
 
 	ipcMain.handle('download-check', async(event, arg, response) => {
 		
-				if ('last-modified' in response.headers) {
-					var content_length = response.headers['content-length'];
-					var content_type = response.headers['content-type'];
-					var last_modified = response.headers['last-modified'];
-					
-					var flag = checkDownload(download_list, last_modified, content_length, arg.filename);
-	
-					if(flag == false){
-						var info ={"completed":checkCompleted(download_list, last_modified, content_length, arg.filename), "paused":checkPaused(download_list, last_modified, content_length, arg.filename), "stopped":checkStopped(download_list, last_modified, content_length, arg.filename)}; 
-						
-	
-						if(info.paused != false){
-	
-							if(info.stopped != false){
-								fs.rmSync(download_list.stopped[info.stopped].temp_location, { recursive: true });
-								delete download_list.stopped[info.stopped];
-							}
-	
-							download_list.paused[info.paused].status = "downloading";
-							download_list.paused[info.paused].init_time = arg.init_time;
-							download_list.downloading[arg.init_time] = download_list.paused[info.paused];
-							delete download_list.paused[info.paused];
-							updateDownloadList(download_list_file, download_list);
-	
-						} else if(info.stopped != false){
-							fs.rmSync(download_list.stopped[info.stopped].temp_location, { recursive: true });
-							folderCreate(arg.temp_location,{"content_length": content_length, "content_type": content_type, "last_modified": last_modified});
-							download_list.stopped[info.stopped].status = "downloading";
-							download_list.stopped[info.stopped].init_time = arg.init_time;
-							download_list.downloading[arg.init_time] = download_list.stopped[info.stopped];
-							delete download_list.stopped[info.stopped];
-							updateDownloadList(download_list_file, download_list);
-						} else if(info.completed != false){
-							console.log('File checking completed.');
-							if(locationUpdate(arg, {"content_length": content_length, "content_type": content_type, "last_modified": last_modified}, download_list) != false){
-							var temp_p = path.parse(arg.temp_location);
-							arg.filename = temp_p.name + temp_p.ext;
-							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": temp_p.ext, "location": arg.location};
-							download_list.downloading[arg.init_time] = data;
-							updateDownloadList(download_list_file, download_list);
-							} else {
-								return false;
-							}
-							
-						} else {
-							console.log('File not found in server.');
-							folderCreate(arg.temp_location,{"content_length": content_length, "content_type": content_type, "last_modified": last_modified});
-							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
-							download_list.downloading[arg.init_time] = data;
-							updateDownloadList(download_list_file, download_list);
-	
-						}
-					} else {
-						console.log('File already downloading.');
-						return false;
-					}
-	
-					console.log('Returning true.');
-					return arg.temp_location;
-	
-				} else {
-					if(fs.existsSync(arg.temp_location)){
-						if(locationUpdate(arg, {"content_length": 0, "content_type": "", "last_modified": ""}) != false){
-							var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
-							download_list.downloading[arg.init_time] = data;
-							updateDownloadList(download_list_file, download_list);
-	
-						return arg.temp_location;
-						} else {
-							return false;
-						}
-						
-					} else {
-						console.log('File not found in server.2');
-						folderCreate(arg.temp_location,{"content_length": 0, "content_type": "", "last_modified": ""});
-						var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
-						download_list.downloading[arg.init_time] = data;
-						updateDownloadList(download_list_file, download_list);
-						return arg.temp_location;
-					}
-				}
+				return downlod_check(arg, response);
 			
 			
 
@@ -283,8 +294,17 @@ function createWindow () {
 	
 
 	ipcMain.handle('download-pause', (event, arg) => {
-		if(arg in array_downloader.keys()) {
+		
+
+		if(Object.keys(array_downloader).includes(''+arg)) {
+			download_list.paused[arg] = download_list.downloading[arg];
+			download_list.paused[arg].status = "paused";
+			download_list.paused[arg].progress = array_downloader[arg].totalProgress.percentage;
+			download_list.paused[arg].downloaded = array_downloader[arg].totalProgress.bytes;
+			delete download_list.downloading[arg];
+			updateDownloadList(download_list_file, download_list);
 			array_downloader[arg].destroy();
+			delete array_downloader[arg];
 			return true;
 		} else {
 			return false;
@@ -295,7 +315,6 @@ function createWindow () {
 		
 		var data = {};
 		for (i in array_downloader) {
-			console.log(array_downloader[i]);
 			data[i] = {"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress.percentage, "content_length": array_downloader[i].size, "speed": array_downloader[i].totalProgress.speed, "downloaded": array_downloader[i].totalProgress.bytes, "filename": download_list.downloading[i].filename, "ext": download_list.downloading[i].ext, "url": download_list.downloading[i].url, "merge_percent": array_downloader[i]._margeStatus.percentage, "init_time": download_list.downloading[i].init_time};
 		}
 		return data;
@@ -308,6 +327,7 @@ function createWindow () {
 			delete download_list.downloading[arg];
 			delete array_downloader[arg];
 			updateDownloadList(download_list_file, download_list);
+			new Notification({title: 'CyberX+ Download Manager', body: 'Download Finished! File Name: '+download_list.completed[arg].filename, icon: path.join(__dirname, 'src/assets/img/logo/240px.png')}).show();
 			return download_list.completed[arg]['time_taken'];
 		} else {
 			return false;
@@ -507,6 +527,89 @@ function checkStopped(download_list, last_modified, content_length, filename){
 		}
 	}
 	return false;
+}
+
+function downlod_check(arg, response){
+	if ('last-modified' in response.headers) {
+		var content_length = response.headers['content-length'];
+		var content_type = response.headers['content-type'];
+		var last_modified = response.headers['last-modified'];
+		
+		var flag = checkDownload(download_list, last_modified, content_length, arg.filename);
+		if(flag == false){
+			var info ={"completed":checkCompleted(download_list, last_modified, content_length, arg.filename), "paused":checkPaused(download_list, last_modified, content_length, arg.filename), "stopped":checkStopped(download_list, last_modified, content_length, arg.filename)}; 
+			
+
+			if(info.paused != false){
+
+				if(info.stopped != false){
+					fs.rmSync(download_list.stopped[info.stopped].temp_location, { recursive: true });
+					delete download_list.stopped[info.stopped];
+				}
+
+				download_list.paused[info.paused].status = "downloading";
+				download_list.paused[info.paused].init_time = arg.init_time;
+				download_list.downloading[arg.init_time] = download_list.paused[info.paused];
+				delete download_list.paused[info.paused];
+				updateDownloadList(download_list_file, download_list);
+
+			} else if(info.stopped != false){
+				fs.rmSync(download_list.stopped[info.stopped].temp_location, { recursive: true });
+				folderCreate(arg.temp_location,{"content_length": content_length, "content_type": content_type, "last_modified": last_modified});
+				download_list.stopped[info.stopped].status = "downloading";
+				download_list.stopped[info.stopped].init_time = arg.init_time;
+				download_list.downloading[arg.init_time] = download_list.stopped[info.stopped];
+				delete download_list.stopped[info.stopped];
+				updateDownloadList(download_list_file, download_list);
+			} else if(info.completed != false){
+				console.log('File checking completed.');
+				if(locationUpdate(arg, {"content_length": content_length, "content_type": content_type, "last_modified": last_modified}, download_list) != false){
+				var temp_p = path.parse(arg.temp_location);
+				arg.filename = temp_p.name + temp_p.ext;
+				var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": temp_p.ext, "location": arg.location};
+				download_list.downloading[arg.init_time] = data;
+				updateDownloadList(download_list_file, download_list);
+				} else {
+					return false;
+				}
+				
+			} else {
+				console.log('File not found in server.');
+				folderCreate(arg.temp_location,{"content_length": content_length, "content_type": content_type, "last_modified": last_modified});
+				var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": content_length, "content_type": content_type, "last_modified": last_modified, "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
+				download_list.downloading[arg.init_time] = data;
+				updateDownloadList(download_list_file, download_list);
+
+			}
+		} else {
+			console.log('File already downloading.');
+			return false;
+		}
+
+		console.log('Returning true.');
+		return arg.temp_location;
+
+	} else {
+		if(fs.existsSync(arg.temp_location)){
+			if(locationUpdate(arg, {"content_length": 0, "content_type": "", "last_modified": ""}) != false){
+				var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
+				download_list.downloading[arg.init_time] = data;
+				updateDownloadList(download_list_file, download_list);
+
+			return arg.temp_location;
+			} else {
+				return false;
+			}
+			
+		} else {
+			console.log('File not found in server.2');
+			folderCreate(arg.temp_location,{"content_length": 0, "content_type": "", "last_modified": ""});
+			var data = {"url": arg.url, "temp_location": arg.temp_location, "filename": arg.filename, "headers": JSON.parse(arg.headers), "username": arg.username, "password": arg.password, "connections": arg.connections, "maxRetry": arg.maxRetry, "existBehavior": arg.existBehavior, "reportInterval": arg.reportInterval, "init_time": arg.init_time, "content_length": 0, "content_type": "", "last_modified": "", "status": "downloading", "progress": 0, "downloaded": 0, "eta": 0, "ext": path.parse(arg.temp_location).ext, "location": arg.location};
+			download_list.downloading[arg.init_time] = data;
+			updateDownloadList(download_list_file, download_list);
+			return arg.temp_location;
+		}
+	}
 }
 
 
