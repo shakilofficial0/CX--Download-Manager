@@ -16,6 +16,13 @@ var download_list = JSON.parse(fs.readFileSync(download_list_file));
 var array_downloader = {};
 
 
+for (i in download_list.downloading) {
+	download_list.stopped[i] = download_list.downloading[i];
+	download_list.stopped[i].status = "stopped";
+	delete download_list.downloading[i];
+}
+updateDownloadList(download_list_file, download_list);
+
 
 
 function createWindow () {
@@ -228,7 +235,8 @@ function createWindow () {
 		},
 		{ label: 'Quit', click:  function(){
 			var data = JSON.parse(fs.readFileSync(path.join(__dirname, 'system','download_list.json')));
-			if(data.downloading.length > 0){
+			
+			if(Object.keys(data.downloading).length > 0){
 				var options = {
 					type: 'question',
 					buttons: ['Yes', 'No'],
@@ -239,8 +247,13 @@ function createWindow () {
 				  };
 				  dialog.showMessageBox(null, options).then((response) => {
 					if (response.response == 0){
-						data.stopped = data.stopped.concat(data.downloading);
-						data.downloading = [];
+						for (i in data.downloading) {
+							array_downloader[i].destroy();
+							download_list.stopped[i] = download_list.downloading[i];
+							download_list.stopped[i].status = "stopped";
+							delete download_list.downloading[i];
+							delete array_downloader[i];
+						}
 						fs.writeFileSync(path.join(__dirname, 'system','download_list.json'), JSON.stringify(data, null, 4));
 						app.isQuiting = true;
 						app.quit();
@@ -313,8 +326,12 @@ function createWindow () {
 	});
 
 	ipcMain.handle('download-resume', async(event, arg) => {
-
-		var data = download_list.paused[arg];
+		var data ;
+		if(Object.keys(download_list.paused).includes(''+arg)) {
+			data = download_list.paused[arg];
+		} else if(Object.keys(download_list.stopped).includes(''+arg)) {
+			data = download_list.stopped[arg];
+		}
 		data.init_time = new Date().getTime();
 		data.status = "queued";
 		var result =downlod_check(data, {"headers": {"content-length": data.content_length, "content-type": data.content_type, "last-modified": data.last_modified}});
@@ -451,7 +468,7 @@ async function downloader(arg){
 // Function
 
 function updateDownloadList(download_list_file, download_list){
-	fs.writeFileSync(download_list_file, JSON.stringify(download_list));
+	fs.writeFileSync(download_list_file, JSON.stringify(download_list, null, 4));
 }
 
 
@@ -671,6 +688,12 @@ function clearDumb(){
 	return;
 
 }
+
+
+
+	
+	
+
 
 
 

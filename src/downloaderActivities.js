@@ -234,7 +234,7 @@ setInterval(() => {
 		
 	});
 
-}, 1000);
+}, 500);
 
 // Module Rewrite
 // Path: node_modules\easydl\dist\index.js
@@ -353,7 +353,7 @@ function createStoppedSection(arg){
 				sub_html +='<div class="card-body">';
 				sub_html +='<div class="card-title header-elements">';
 				sub_html +='<div class="card-header-elements ms-auto" id="dl-status-'+index+'">';
-				sub_html +='<i class="ti ti-player-play ti-sm" dl-data="'+index+'"></i>';
+				sub_html +='<i class="ti ti-player-play ti-sm" dl-data="'+index+'" onclick="resumeDownload('+index+')"></i>';
 				sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'"></i>';
 				sub_html +='</div>';
 				sub_html +='</div>';
