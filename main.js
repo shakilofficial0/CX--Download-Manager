@@ -9,9 +9,9 @@ const utilities = require('./src/utilities.js');
 const express = require('express');
 let win;
 
-const version_file = path.join(__dirname, 'system','version.json');
-var download_list_file = path.join(__dirname, 'system','download_list.json');
-const system_var = JSON.parse(fs.readFileSync(path.join(__dirname,'system', 'settings.json'), 'utf8')).settings;
+const version_file = path.join(__dirname, '..', 'system','version.json');
+var download_list_file = path.join(__dirname, '..', 'system','download_list.json');
+const system_var = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'system', 'settings.json'), 'utf8')).settings;
 var download_list = JSON.parse(fs.readFileSync(download_list_file));
 var array_downloader = {};
 
@@ -29,7 +29,7 @@ function createWindow () {
 
 	// Check settings file is present or not
 	const app_version = app.getVersion();
-	const settings_file = path.join(__dirname, 'system','settings.json');
+	const settings_file = path.join(__dirname, '..', 'system','settings.json');
 	if (fs.existsSync(settings_file)) {
 		console.log('Settings file exists.');
 	}
@@ -155,31 +155,38 @@ function createWindow () {
 		method: 'HEAD',
 		headers: JSON.parse(data.headers).headers
 	}, async function (err, res, body) {
-		
-		
-		var result =downlod_check(data, {"headers": res.headers});
-		if(result == false){
-			
-			response.send({"status": false, "message": "File already downloading."});
+		if(err){
+			response.send({"status": false, "message": "Error occured. Error: "+err});
 			return;
 		} else {
-			data["temp_location"] = result;
-			
-			try{
-				var datar = await downloader(data);
-				array_downloader[data.init_time] = datar;
-				response.send({"status": true, "message": "Download added to queue."});
-				new Notification({title: 'CyberX+ Download Manager', body: 'Download Added! File Name: '+data.filename, icon: path.join(__dirname, 'src/assets/img/logo/240px.png')}).show();
+
+			var result =downlod_check(data, {"headers": res.headers});
+			if(result == false){
+				
+				response.send({"status": false, "message": "File already downloading."});
 				return;
-	
-			} catch(err) {
-				console.log(err);
-				response.send({"status": false, "message": "Error occured."});
-				return;
+			} else {
+				data["temp_location"] = result;
+				
+				try{
+					var datar = await downloader(data);
+					array_downloader[data.init_time] = datar;
+					response.send({"status": true, "message": "Download added to queue."});
+					new Notification({title: 'CyberX+ Download Manager', body: 'Download Added! File Name: '+data.filename, icon: path.join(__dirname, 'src/assets/img/logo/240px.png')}).show();
+					return;
+		
+				} catch(err) {
+					console.log(err);
+					response.send({"status": false, "message": "Error occured."});
+					return;
+				}
+
+				
 			}
 
-			
 		}
+		
+		
 
 	});
 
@@ -234,7 +241,7 @@ function createWindow () {
 		}
 		},
 		{ label: 'Quit', click:  function(){
-			var data = JSON.parse(fs.readFileSync(path.join(__dirname, 'system','download_list.json')));
+			var data = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'system','download_list.json')));
 			
 			if(Object.keys(data.downloading).length > 0){
 				var options = {
@@ -254,7 +261,7 @@ function createWindow () {
 							delete download_list.downloading[i];
 							delete array_downloader[i];
 						}
-						fs.writeFileSync(path.join(__dirname, 'system','download_list.json'), JSON.stringify(data, null, 4));
+						fs.writeFileSync(path.join(__dirname, '..', 'system','download_list.json'), JSON.stringify(data, null, 4));
 						app.isQuiting = true;
 						app.quit();
 					}
@@ -664,16 +671,16 @@ function downlod_check(arg, response){
 }
 
 function updateDumb(data){
-	var dumb = JSON.parse(fs.readFileSync(path.join(__dirname, 'system','dumb.json')));
+	var dumb = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'system','dumb.json')));
 	var init_time = new Date().getTime();
 	dumb[init_time] = {"temp_location": data};
-	fs.writeFileSync(path.join(__dirname, 'system','dumb.json'), JSON.stringify(dumb));
+	fs.writeFileSync(path.join(__dirname, '..', 'system','dumb.json'), JSON.stringify(dumb));
 	return;
 }
 
 
 function clearDumb(){
-	var dumb = JSON.parse(fs.readFileSync(path.join(__dirname, 'system','dumb.json')));
+	var dumb = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'system','dumb.json')));
 	var new_dumb = {};
 	for (var i in dumb) {
 		fs.rm(dumb[i].temp_location, { recursive: true }, (err) => {
@@ -684,7 +691,7 @@ function clearDumb(){
 		});
 		delete dumb[i];
 	}
-	fs.writeFileSync(path.join(__dirname, 'system','dumb.json'), JSON.stringify(new_dumb));
+	fs.writeFileSync(path.join(__dirname, '..', 'system','dumb.json'), JSON.stringify(new_dumb));
 	return;
 
 }

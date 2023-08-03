@@ -1,14 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 const utilities = require('./utilities.js');
-const { ipcRenderer } = require('electron');
+const { shell,ipcRenderer } = require('electron');
 const request = require('request');
-const { create } = require('domain');
 
 
 
-const system_var = JSON.parse(fs.readFileSync(path.join(__dirname,'..','system', 'settings.json'), 'utf8')).settings;
-var download_list_file = path.join(__dirname, '..', 'system', 'download_list.json');
+const system_var = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..','system', 'settings.json'), 'utf8')).settings;
+var download_list_file = path.join(__dirname, '..', '..', 'system', 'download_list.json');
 var download_list = JSON.parse(fs.readFileSync(download_list_file));
 
 // section Creation on Starting
@@ -312,7 +311,7 @@ function createCompleteSection(arg){
 				sub_html += '<div class="card-body">';
 				sub_html +='<div class="card-title header-elements">';
 				sub_html +='<div class="card-header-elements ms-auto">';
-				sub_html +='<i class="ti ti-folder ti-sm" onclick="gotoFolder(\''+arg_keys[i]+'\')"></i>';
+				sub_html +='<i class="ti ti-folder ti-sm" onclick="gotoFolder(\''+arg[arg_keys[i]].location.replace(/\\/g,'\\\\')+'\', \''+arg[arg_keys[i]].filename+'\')"></i>';
 				sub_html +='<i class="ti ti-trash ti-sm"></i>';
 				sub_html +='</div>';
 				sub_html +='</div>';
@@ -463,4 +462,26 @@ function resumeDownload(id){
 		}
 		
 	});
+}
+
+
+function gotoFolder(location, filename){
+
+	location = path.join(location, filename);
+	if(fs.existsSync(location)){
+		shell.showItemInFolder(location);
+	} else {
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			html: 'File removed Locally!',
+			showConfirmButton: true,
+			confirmButtonText: 'Go Back',
+			customClass: {
+				confirmButton: 'btn btn-primary',
+			},
+			buttonsStyling: false
+			
+		});
+	}
 }

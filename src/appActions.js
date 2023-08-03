@@ -59,7 +59,7 @@ download_location.addEventListener('click', (event) => {
 // Check if internet connection is available
 
 var internetAvailable = require("internet-available");
-var update_info = JSON.parse(fs.readFileSync(path.join(__dirname,'..','system', 'version.json'), 'utf8'));
+var update_info = JSON.parse(fs.readFileSync(path.join(__dirname,'..', '..','system', 'version.json'), 'utf8'));
 
 // Set a timeout and a limit of attempts to check for connection
 if(!update_info.version || update_info.last_update != new Date().toLocaleDateString()) {
@@ -68,7 +68,7 @@ internetAvailable({
     retries: 10,
 }).then(function(){
     // check update available
-	let url = "https://raw.githubusercontent.com/shakilofficial0/shakilofficial0.github.io/master/actions/updater/cyberxplus-download-manager.json";
+	let url = "https://api-server.codebumble.net/cdm-version";
 
 	https.get(url,(res) => {
 		let body = "";
@@ -111,7 +111,7 @@ internetAvailable({
 
 				// update version.json
 				update_info.last_update = new Date().toLocaleDateString();
-				fs.writeFileSync(path.join(__dirname,'..','system', 'version.json'), JSON.stringify(update_info));
+				fs.writeFileSync(path.join(__dirname, '..', '..','system', 'version.json'), JSON.stringify(update_info));
 
 				
 			} catch (error) {

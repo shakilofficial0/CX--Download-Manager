@@ -162,7 +162,26 @@ const extToIcon=(ext)=>{
 	}
 }
 
+const timeToAgo=(time)=>{
+	var now = new Date();
+	var diff = now - time;
+	if(diff < 60000){
+		return "Just now";
+	} else if(diff < 3600000){
+		return (diff/60000).toFixed(0) + " minute(s) ago";
+	} else if(diff < 86400000){
+		return (diff/3600000).toFixed(0) + " hour(s) ago";
+	} else if(diff < 604800000){
+		return (diff/86400000).toFixed(0) + " day(s) ago";
+	} else if(diff < 2419200000){
+		return (diff/604800000).toFixed(0) + " week(s) ago";
+	} else {
+		//time to date
+		var date = new Date(time);
+		return date.toDateString();
+	}
+}
 
 
 
-module.exports = { humanReadableByte, getEta, humanReadableTime, pathToFilename, humanReadablePercent, filenameToExtention, nameToJsonIndex, urlToFilename, extToIcon}
+module.exports = { humanReadableByte, getEta, humanReadableTime, pathToFilename, humanReadablePercent, filenameToExtention, nameToJsonIndex, urlToFilename, extToIcon, timeToAgo}
