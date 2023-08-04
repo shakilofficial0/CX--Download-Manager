@@ -43,7 +43,8 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "deleteAppDataOnUninstall": true,
-      "runAfterFinish": true
+      "runAfterFinish": true,
+      "include": "a.nsh"
     },
     "extraResources": [
       {
@@ -52,6 +53,16 @@
         "filter": [
           "**/*"
         ]
+      }
+    ],
+    "extraFiles": [
+      {
+        "from": "native-action.json",
+        "to": "native-action.json"
+      },
+      {
+        "from": "open.bat",
+        "to": "open.bat"
       }
     ]
   },
