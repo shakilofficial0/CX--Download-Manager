@@ -367,7 +367,7 @@ function createWindow () {
 		
 		var data = {};
 		for (i in array_downloader) {
-			data[i] = {"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress.percentage, "content_length": array_downloader[i].size, "speed": array_downloader[i].totalProgress.speed, "downloaded": array_downloader[i].totalProgress.bytes, "filename": download_list.downloading[i].filename, "ext": download_list.downloading[i].ext, "url": download_list.downloading[i].url, "merge_percent": array_downloader[i]._margeStatus.percentage, "init_time": download_list.downloading[i].init_time};
+			data[i] = {"status": array_downloader[i]._status, "progress": array_downloader[i].totalProgress.percentage, "content_length": array_downloader[i].size, "speed": array_downloader[i].totalProgress.speed, "downloaded": array_downloader[i].totalProgress.bytes, "filename": download_list.downloading[i].filename, "ext": download_list.downloading[i].ext, "url": download_list.downloading[i].url, "merge_percent": array_downloader[i]._margeStatus.percentage, "init_time": download_list.downloading[i].init_time,"location": download_list.downloading[i].location};
 		}
 		return data;
 	});
@@ -378,6 +378,7 @@ function createWindow () {
 			download_list.completed[arg] = download_list.downloading[arg];
 			download_list.completed[arg]['time_taken'] = (new Date().getTime() - download_list.completed[arg].init_time)/1000;
 			delete download_list.downloading[arg];
+			array_downloader[arg]._status = "completed";
 			delete array_downloader[arg];
 			updateDownloadList(download_list_file, download_list);
 
@@ -404,6 +405,44 @@ function createWindow () {
 		}
 	
 		return false;
+	});
+
+
+	ipcMain.handle('download-delete', (event, arg) => {
+		if(Object.keys(array_downloader).includes(''+arg)) {
+			array_downloader[arg].destroy();
+			delete array_downloader[arg];
+			fs.rm(download_list.downloading[arg].temp_location, { recursive: true , force: true}, (err) => {
+				updateDumb(download_list.downloading[arg].temp_location)
+				delete download_list.downloading[arg];
+				updateDownloadList(download_list_file, download_list);
+			});
+			return true;
+		} else {
+			return false;
+		}
+	});
+
+	ipcMain.handle('download-ps', (event, arg, place) => {
+		if(place == "paused"){
+			fs.rm(download_list.paused[arg].temp_location, { recursive: true , force: true}, (err) => {
+				updateDumb(download_list.paused[arg].temp_location)
+				delete download_list.paused[arg];
+				updateDownloadList(download_list_file, download_list);
+			});
+
+		} else if(place == "stopped"){
+			fs.rm(download_list.stopped[arg].temp_location, { recursive: true , force: true}, (err) => {
+				updateDumb(download_list.stopped[arg].temp_location)
+				delete download_list.stopped[arg];
+				updateDownloadList(download_list_file, download_list);
+			});
+		} else if(place == "completed"){
+				delete download_list.completed[arg];
+				updateDownloadList(download_list_file, download_list);
+		}
+
+		return true;
 	});
 
 

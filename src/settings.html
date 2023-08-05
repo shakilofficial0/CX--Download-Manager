@@ -89,8 +89,8 @@
 
           <ul class="menu-inner py-1">
             <!-- Page -->
-            <li class="menu-item active">
-              <a href="javascript:void(0);" class="menu-link">
+            <li class="menu-item">
+              <a href="./index.html" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-download"></i>
                 <div data-i18n="Page 1">Downloads</div>
               </a>
@@ -101,8 +101,8 @@
                 <div data-i18n="Page 2">System Monitor</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="./settings.html" class="menu-link">
+            <li class="menu-item active">
+              <a href="javascript:void(0);" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-settings"></i>
                 <div data-i18n="Page 2">Settings</div>
               </a>
@@ -304,74 +304,85 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y ml-3">
-              <h2>Downloads</h2>
+              <h2>Settings</h2>
               <hr>
               <div class="row">
-                <!-- Left Side -->
-                <div class="col-9">
-                  <div class="row ms-3">
-                    <div class="divider text-start">
-                      <div class="divider-text">Downloading</div>
-                    </div>
+				<div class="col-12">
+					<div class="nav-align-top nav-tabs-shadow mb-4">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item" role="presentation">
+							<button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#downaloads-section" aria-controls="downaloads-section" aria-selected="true"><i class="tf-icons ti ti-download ti-xs me-1"></i> Downloads</button>
+							</li>
+							<li class="nav-item" role="presentation">
+							<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#save-location" aria-controls="save-location" aria-selected="false" tabindex="-1"><i class="tf-icons ti ti-location ti-xs me-1"></i> Save Location</button>
+							</li>
+							<li class="nav-item" role="presentation">
+							<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#file-types" aria-controls="file-types" aria-selected="false" tabindex="-1"><i class="tf-icons ti ti-file ti-xs me-1"></i> File Types</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#proxy-socks" aria-controls="proxy-socks" aria-selected="false" tabindex="-1"><i class="tf-icons ti ti-planet ti-xs me-1"></i> Proxy/Socks</button>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane fade show active" id="downaloads-section" role="tabpanel">
+								<div class="row">
+									<div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Max Connection</label>
+										<input class="form-control" type="number" value="10" min="1" max="16" step="1" id="max-connection"/>
+									</div>
+									<div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Max File Download Same Time</label>
+										<input class="form-control" type="number" value="0" min="0" max="16" step="1" />
+									</div>
+									<div class="mb-3 col-12">
+										<label class="form-label">Default User-agent</label>
+										<textarea class="form-control" rows="3" placeholder="Enter The Full Url">CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36</textarea>
+									</div>
+								</div>
+							</div>
 
-                    <div class="Downloading" id="Downloading">
-                      
-                    </div>
+							<div class="tab-pane fade show" id="save-location" role="tabpanel">
+								<p>
+								Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
+								claw
+								candy topping.
+								</p>
+								<p class="mb-0">
+								Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
+								jelly-o ice
+								cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
+								</p>
+							</div>
 
-                    <div class="divider text-start">
-                      <div class="divider-text">Paused</div>
-                    </div>
+							<div class="tab-pane fade show" id="file-types" role="tabpanel">
+								<p>
+								Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
+								claw
+								candy topping.
+								</p>
+								<p class="mb-0">
+								Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
+								jelly-o ice
+								cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
+								</p>
+							</div>
 
-                    <div class="Paused" id="Paused">
-                    </div>
+							<div class="tab-pane fade show" id="proxy-socks" role="tabpanel">
+								<p>
+								Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
+								claw
+								candy topping.
+								</p>
+								<p class="mb-0">
+								Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
+								jelly-o ice
+								cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
+								</p>
+							</div>
 
-                    <div class="divider text-start">
-                      <div class="divider-text">Stopped</div>
-                    </div>
-
-                    <div class="Stopped" id="Stopped">
-                    </div>
-
-                    <div class="divider text-start">
-                      <div class="divider-text">Completed</div>
-                    </div>
-
-                    <div class="Completed" id="Completed">
-                      
-                    </div>
-
-                  </div>
-                </div>
-                <!-- Right Side -->
-                <div class="col-3 mt-5">
-                  <div class="card">
-                    <div class="card-header text-center">
-                      <span class="fw-bold text-center h5">Quick Tools</span>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="demo-inline-spacing d-block ms-3">
-                          <button type="button" class="btn btn-icon btn-label-primary" data-bs-toggle="modal"
-                          data-bs-target="#addNewDownload">
-                            <span class="ti ti-plus" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Add To Download"></span>
-                          </button>
-                          <button type="button" class="btn btn-icon btn-label-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Download All Paused">
-                            <span class="ti ti-player-play"></span>
-                          </button>
-                          <button type="button" class="btn btn-icon btn-label-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Pause All Download">
-                            <span class="ti ti-player-pause"></span>
-                          </button>
-                          <button type="button" class="btn btn-icon btn-label-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Clear All Completed">
-                            <span class="ti ti-trash"></span>
-                          </button>
-                          <button type="button" class="btn btn-icon btn-label-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Clear The List">
-                            <span class="ti ti-trash-x"></span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+						</div>
+					</div>
+				</div>
               </div>
             </div>
             <!-- / Content -->

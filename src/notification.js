@@ -1,3 +1,4 @@
+var internetAvailable = require("internet-available");
 var tabNotification = document.getElementById('allNotification');
 
 var notification_counter = document.getElementById('notification-counter');
@@ -8,12 +9,13 @@ var notification_data = JSON.parse(fs.readFileSync(notification_list, 'utf8'));
 
 
 var counter =0;
-console.log(notification_data.notification);
+
 for(var i = 0; i < notification_data.notification.length; i++){
 	console.log(notification_data.notification[i]);
 	if(notification_data.notification[i].read == false){
 		counter+=1;
 	}
+	console.log(notification_data.notification[i].id);
 	notificationMake(notification_data.notification[i]);
 }
 
@@ -43,28 +45,31 @@ function markasread(id){
 				counter-=1;
 			}
 			
-			updateNotificationFile();
+			updateNotificationFile(notification_data);
 			break;
 		}
 	}
 }
 
 function deleteNotification(id){
+	var element = document.getElementById('nfn-'+id);
+	element.remove();
+	countNotification(counter-1);
 	for (var i = 0; i < notification_data.notification.length; i++) {
 		if(notification_data.notification[i].id == id){
 			notification_data.notification.pop(i);
-			updateNotificationFile();
+			updateNotificationFile(notification_data);
 			break;
 		}
 	}
 }
 
-function updateNotificationFile(){
+function updateNotificationFile(notification_data){
 	fs.writeFileSync(notification_list, JSON.stringify(notification_data), 'utf8');
 }
 
 
-function notificationMake(data){
+function notificationMake(data, reverse=false){
 	var sub_html ="";
 	if(data.read){
 	sub_html += '<li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read" id="nfn-'+data.id+'">';
@@ -96,12 +101,71 @@ function notificationMake(data){
 	sub_html += '</div>';
 	sub_html += '</div>';
 	sub_html += '</li>';
-
-	tabNotification.innerHTML = sub_html + tabNotification.innerHTML;
+	if(reverse){
+		tabNotification.innerHTML = sub_html+tabNotification.innerHTML;
+	} else {
+		tabNotification.innerHTML = tabNotification.innerHTML+sub_html;
+	}
 
 }
 
 
-setInterval(function(){}, 10000);
+setInterval(function(){
+
+	internetAvailable({
+		timeout: 4000,
+		retries: 2,
+	}).then(function(){
+
+		console.log(notification_data.last_id);
+		var req = request({
+			url: "https://api-server.codebumble.net/cdm-notification",
+			method: "GET",
+			json: true,
+			headers: {
+				"content-type": "application/json",
+			},
+			qs: {
+				"last_id": notification_data.last_id
+			}
+		}, function (error, response, body) {
+
+			if (!error && response.statusCode === 200) {
+				
+					var data = body;
+					console.log(data);
+					if(0<data.length){
+						for (var i = 0; i < data.length; i++) {
+							console.log(data[i]);
+							notificationMake(data[i], true);
+							notification_data.last_id = data[i].id;
+							data[i].read = false;
+							notification_data.notification.unshift(data[i]);
+							counter +=1
+							if(data[i].hasImage == true || data[i].hasImage == "true"){
+								var notify = new Notification(data[i].title, {
+									body: data[i].body,
+									image: data[i].image_src
+								});
+							} else {
+								var notify = new Notification(data[i].title, {
+									body: data[i].body,
+									icon: path.join(__dirname, 'assets', 'img', 'logo','favicon.ico')
+								});
+							}
+
+							
+							
+						}
+						updateNotificationFile(notification_data);
+						countNotification(counter);
+					}
+				
+			}
+
+		});
+	});
+}, 10000);
+
 
 

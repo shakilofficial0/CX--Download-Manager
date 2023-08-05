@@ -262,7 +262,7 @@ function createPausedSection(arg){
 			sub_html +='<div class="card-title header-elements">';
 			sub_html +='<div class="card-header-elements ms-auto" id="dl-status-'+index+'">';
 			sub_html +='<i class="ti ti-player-play ti-sm" dl-data="'+index+'" onclick="resumeDownload('+index+')"></i>';
-			sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'"></i>';
+			sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'" onclick="deletePS(\''+index+'\', \'paused\')"></i>';
 			sub_html +='</div>';
 			sub_html +='</div>';
 
@@ -312,7 +312,7 @@ function createCompleteSection(arg){
 				sub_html +='<div class="card-title header-elements">';
 				sub_html +='<div class="card-header-elements ms-auto">';
 				sub_html +='<i class="ti ti-folder ti-sm" onclick="gotoFolder(\''+arg[arg_keys[i]].location.replace(/\\/g,'\\\\')+'\', \''+arg[arg_keys[i]].filename+'\')"></i>';
-				sub_html +='<i class="ti ti-trash ti-sm"></i>';
+				sub_html +='<i class="ti ti-trash ti-sm" onclick="deletePS(\''+arg_keys[i]+'\', \'completed\')"></i>';
 				sub_html +='</div>';
 				sub_html +='</div>';
 				sub_html +='<div class="row">';
@@ -353,7 +353,7 @@ function createStoppedSection(arg){
 				sub_html +='<div class="card-title header-elements">';
 				sub_html +='<div class="card-header-elements ms-auto" id="dl-status-'+index+'">';
 				sub_html +='<i class="ti ti-player-play ti-sm" dl-data="'+index+'" onclick="resumeDownload('+index+')"></i>';
-				sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'"></i>';
+				sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'" onclick="deletePS(\''+index+'\', \'stopped\')"></i>';
 				sub_html +='</div>';
 				sub_html +='</div>';
 	
@@ -399,7 +399,7 @@ function createDownloadingSection(arg){
 				sub_html +='<div class="card-title header-elements">';
 				sub_html +='<div class="card-header-elements ms-auto" id="dl-status-'+index+'">';
 				sub_html +='<i class="ti ti-player-pause ti-sm" onclick="pauseDownload('+index+')"></i>';
-				sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'"></i>';
+				sub_html +='<i class="ti ti-trash ti-sm" dl-data="'+index+'" onclick="deleteDownloading(\''+index+'\')"></i>';
 				sub_html +='</div>';
 				sub_html +='</div>';
 	
@@ -484,4 +484,58 @@ function gotoFolder(location, filename){
 			
 		});
 	}
+}
+
+
+function deleteDownloading(id){
+
+	Swal.fire({
+		icon: 'warning',
+		title: 'Are you sure?',
+		html: 'You won\'t be able to revert this!',
+		showCancelButton: true,
+		confirmButtonText: 'Yes, delete it!',
+		customClass: {
+			confirmButton: 'btn btn-primary',
+			cancelButton: 'btn btn-outline-danger ms-2'
+		},
+		buttonsStyling: false
+	}).then(function (result) {
+		if (result) {
+
+			var place = document.getElementById("dl-"+id);
+			ipcRenderer.invoke('download-delete', id).then((result) => {
+				if(result == true){
+					place.remove();
+				}
+				
+			});
+		}
+	});
+
+}
+
+function deletePS(id, place){
+	Swal.fire({
+		icon: 'warning',
+		title: 'Are you sure?',
+		html: 'You won\'t be able to revert this!',
+		showCancelButton: true,
+		confirmButtonText: 'Delete',
+		customClass: {
+			confirmButton: 'btn btn-primary',
+			cancelButton: 'btn btn-outline-danger ms-2'
+		},
+		buttonsStyling: false
+	}).then(function (result) {
+		var pl = document.getElementById("dl-"+id);
+		if (result) {
+			ipcRenderer.invoke('download-ps', id, place).then((result) => {
+				if(result == true){
+					pl.remove();
+				}
+				
+			});
+		}
+	});
 }

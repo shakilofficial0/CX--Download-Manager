@@ -44,7 +44,10 @@
       "createStartMenuShortcut": true,
       "deleteAppDataOnUninstall": true,
       "runAfterFinish": true,
-      "include": "a.nsh"
+      "include": "a.nsh",
+      "artifactName": "${name}-installer.${ext}",
+      "uninstallDisplayName": "${productName}",
+      "license": "license.txt"
     },
     "extraResources": [
       {
