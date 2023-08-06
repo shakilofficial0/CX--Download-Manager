@@ -7,11 +7,12 @@ const fs = require('fs');
 const Downloader = require('easydl');
 const utilities = require('./src/utilities.js');
 const express = require('express');
+const os = require('os');
 let win;
 
 const version_file = path.join(__dirname, '..', 'system','version.json');
 var download_list_file = path.join(__dirname, '..', 'system','download_list.json');
-const system_var = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'system', 'settings.json'), 'utf8')).settings;
+let system_var = null;
 var download_list = JSON.parse(fs.readFileSync(download_list_file));
 var array_downloader = {};
 
@@ -69,10 +70,41 @@ function createWindow () {
 				"fileTypes": ["zip", "rar", "avi", "mp4", "iso", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "exe", "msi", "apk", "torrent", "mp3", "wav", "flac", "ogg", "jpg", "jpeg", "png", "gif", "bmp", "webp", "svg", "ico", "txt", "html", "css", "js", "php", "json", "xml", "md", "csv", "ts", "tsx", "jsx", "py", "java", "c", "cpp", "h", "hpp", "cs", "go", "rb", "sh", "ps1", "psm1", "psd1", "bat", "cmd", "vbs", "vbe", "wsf", "wsh", "ps1xml", "psc1", "msh", "msh1", "msh2", "mshxml", "msh1xml", "msh2xml", "scf", "lnk", "inf", "reg", "url", "m3u", "m3u8", "flv", "ogg", "webm", "mkv", "mpg", "mpeg", "3gp", "3g2", "m4v", "wmv", "mov", "tar.gz"],
 				
 			}
-		};
+		};	
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Music')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Music'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Video')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Video'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Image')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Image'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Document')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Document'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Program')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Program'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Compressed')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Compressed'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Torrent')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Torrent'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Other')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Other'));
+			}
+			if(fs.existsSync(path.join(os.homedir(), 'Downloads', 'Temp')) == false){
+				fs.mkdirSync(path.join(os.homedir(), 'Downloads', 'Temp'));
+			}
 			fs.writeFileSync(settings_file, JSON.stringify(settings, null, 4));
 			console.log('Settings file created.');
 	}
+	system_var = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'system', 'settings.json'), 'utf8')).settings;
 	// Check version file is present or not
 
 	
@@ -144,7 +176,7 @@ function createWindow () {
 	data["maxRetry"] = system_var.retry;
 	data["existBehavior"] = "overwrite";
 	data["reportInterval"] = 600;
-	data["location"] = system_var.location.general;
+	data["location"] = system_var.location[utilities.nameToCategory(data.filename)];
 	data["username"] = "";
 	data["password"] = "";
 	data["status"] = "queued";

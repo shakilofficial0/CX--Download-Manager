@@ -182,6 +182,28 @@ const timeToAgo=(time)=>{
 	}
 }
 
+const nameToCategory=(name)=>{
+	var ext = filenameToExtention(name);
+
+	if(ext == ".zip" || ext == ".rar" || ext == ".7z" || ext == ".tar" || ext == ".gz" || ext == ".iso" || ext == ".bz2" || ext == ".xz"){
+		return "compressed";
+	} else if(ext == ".mp3" || ext == ".wav" || ext == ".wma" || ext == ".mid" || ext == ".midi" || ext == ".ogg" || ext == ".flac" || ext == ".aac" || ext == ".aiff" || ext == ".ape" || ext == ".m4a" || ext == ".mpa" || ext == ".wpl"){
+		return "music";
+	} else if(ext == ".mp4" || ext == ".mkv" || ext == ".flv" || ext == ".avi" || ext == ".wmv" || ext == ".mov" || ext == ".mpg" || ext == ".mpeg" || ext == ".rm" || ext == ".swf" || ext == ".vob" || ext == ".3gp" || ext == ".3g2"){
+		return "video";
+	} else if(ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".gif" || ext == ".bmp" || ext == ".tiff" || ext == ".psd" || ext == ".ai" || ext == ".svg" || ext == ".ico"){
+		return "image";
+	} else if(ext == ".doc" || ext == ".docx" || ext == ".pdf" || ext == ".txt" || ext == ".rtf" || ext == ".odt" || ext == ".tex" || ext == ".wks" || ext == ".wps" || ext == ".wpd"){
+		return "document";
+	} else if(ext == ".exe" || ext == ".msi" || ext == ".apk" || ext == ".app" || ext == ".bat" || ext == ".cgi" || ext == ".com" || ext == ".gadget" || ext == ".jar" || ext == ".wsf"){
+		return "program";
+	} else if (ext == ".torrent"){
+		return "torrent"
+	} else {
+		return "other";
+	}
+}
 
 
-module.exports = { humanReadableByte, getEta, humanReadableTime, pathToFilename, humanReadablePercent, filenameToExtention, nameToJsonIndex, urlToFilename, extToIcon, timeToAgo}
+
+module.exports = { humanReadableByte, getEta, humanReadableTime, pathToFilename, humanReadablePercent, filenameToExtention, nameToJsonIndex, urlToFilename, extToIcon, timeToAgo, nameToCategory}
