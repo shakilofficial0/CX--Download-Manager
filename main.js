@@ -8,6 +8,7 @@ const Downloader = require('easydl');
 const utilities = require('./src/utilities.js');
 const express = require('express');
 const os = require('os');
+const { sys } = require('typescript');
 let win;
 
 const version_file = path.join(__dirname, '..', 'system','version.json');
@@ -155,9 +156,9 @@ function createWindow () {
 
 	data["temp_location"] = path.join(system_var.location.temp, data.filename);
 	data["init_time"] = new Date().getTime();
-	data["headers"]["user-agent"] = system_var["user-agent"];
+	data["headers"]["user-agent"] = system_var["user_agent"];
 	data["headers"]["accept"] = "*/*";
-	data["headers"]["accept-encoding"] = "gzip, deflate, br";
+	data["headers"]["accept-encoding"] = "*";
 	data["headers"]["accept-language"] = "en-US,en;q=0.9";
 	data["headers"]["cache-control"] = "no-cache";
 	data["headers"]["pragma"] = "no-cache";
