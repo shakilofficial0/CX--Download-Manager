@@ -14,8 +14,9 @@
 			"temp": "C:\\Users\\shaki\\Downloads\\Temp\\"
 		},
 		"threads": 10,
-		"maxSpeed": 0,
-		"user-agent": "CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
+		"max_download": 0,
+        "maxSpeed": 0,
+        "user_agent": "CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
 		"retry": 10,
 		"retryDelay": 1000,
 		"timeout": 10000,

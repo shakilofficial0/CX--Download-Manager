@@ -51,8 +51,9 @@ function createWindow () {
 					"temp": path.join(os.homedir(), 'Downloads', 'Temp'),
 				},
 				"threads": 4,
+				"max_download": 0,
 				"maxSpeed": 0,
-				"user-agent": "CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
+				"user_agent": "CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
 				"retry": 3,
 				"retryDelay": 1000,
 				"timeout": 10000,
@@ -218,7 +219,7 @@ function createWindow () {
       properties: ['openDirectory']
     })
     if (canceled) {
-      return
+      return false
     } else {
       return filePaths[0]
     }

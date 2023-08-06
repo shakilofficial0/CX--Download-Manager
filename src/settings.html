@@ -332,53 +332,95 @@
 									</div>
 									<div class="mb-3 col-12 col-md-6">
 										<label class="form-label">Max File Download Same Time</label>
-										<input class="form-control" type="number" value="0" min="0" max="16" step="1" />
+										<input class="form-control" type="number" value="0" min="0" max="16" step="1" id="max-file-download"/>
 									</div>
 									<div class="mb-3 col-12">
 										<label class="form-label">Default User-agent</label>
-										<textarea class="form-control" rows="3" placeholder="Enter The Full Url">CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36
+										<textarea class="form-control" rows="3" placeholder="Enter The Full Url" id="user-agent">CyberX+ Download Manager/1.0.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36
                     </textarea>
 									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Max Retry</label>
+										<input class="form-control" type="number" value="8" min="0" max="16" step="1" id="max-retry"/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Retry Delay(Millisecond)</label>
+										<input class="form-control" type="number" value="1000" id="retry-delay"/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Request Timeout(Millisecond)</label>
+										<input class="form-control" type="number" value="10000" id="r-timeout"/>
+									</div>
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary me-sm-3 me-1" id="downloads-submit" >Save</button>
+                  </div>
 								</div>
 							</div>
 
 							<div class="tab-pane fade show" id="save-location" role="tabpanel">
-								<p>
-								Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
-								claw
-								candy topping.
-								</p>
-								<p class="mb-0">
-								Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
-								jelly-o ice
-								cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
-								</p>
+								<div class="row">
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Temp Location</label>
+										<input class="form-control" type="text" id="temp-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">General File</label>
+										<input class="form-control" type="text" id="general-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Music File</label>
+										<input class="form-control" type="text" id="music-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Video File</label>
+										<input class="form-control" type="text" id="video-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Image File</label>
+										<input class="form-control" type="text" id="image-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Document File</label>
+										<input class="form-control" type="text" id="document-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Program File</label>
+										<input class="form-control" type="text" id="program-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Compressed File</label>
+										<input class="form-control" type="text" id="compressed-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Torrent File</label>
+										<input class="form-control" type="text" id="torrent-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+                  <div class="mb-3 col-12 col-md-6">
+										<label class="form-label">Other File</label>
+										<input class="form-control" type="text" id="other-location" webkitdirectory="true" directory multiple value="" required/>
+									</div>
+
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary me-sm-3 me-1" id="location-submit" >Save</button>
+                  </div>
+                  
+                </div>
 							</div>
 
 							<div class="tab-pane fade show" id="file-types" role="tabpanel">
-								<p>
-								Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
-								claw
-								candy topping.
-								</p>
-								<p class="mb-0">
-								Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
-								jelly-o ice
-								cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
-								</p>
+								<div class="row">
+                  <div class="mb-3 col-12">
+										<label class="form-label">File Types</label>
+										<textarea class="form-control" rows="5" placeholder="Enter Extensions" id="file-extension"></textarea>
+									</div>
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary me-sm-3 me-1" id="file-types-submit" >Save</button>
+                  </div>
+                </div>
 							</div>
 
 							<div class="tab-pane fade show" id="proxy-socks" role="tabpanel">
-								<p>
-								Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
-								claw
-								candy topping.
-								</p>
-								<p class="mb-0">
-								Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
-								jelly-o ice
-								cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
-								</p>
+								<h3 class="text-center">Under Maintenance</h3>
 							</div>
 
 						</div>
@@ -528,6 +570,7 @@
     <!-- <script type="module" src="./downloaderAction.js"></script> -->
     <script src="./downloaderActivities.js"></script>
     <script src="./notification.js"></script>
+    <script src="./settings.js"></script>
 
     <!-- Page JS -->
   </body>
