@@ -501,7 +501,7 @@ function deleteDownloading(id){
 		},
 		buttonsStyling: false
 	}).then(function (result) {
-		if (result) {
+		if (result.isConfirmed) {
 
 			var place = document.getElementById("dl-"+id);
 			ipcRenderer.invoke('download-delete', id).then((result) => {
@@ -528,14 +528,13 @@ function deletePS(id, place){
 		},
 		buttonsStyling: false
 	}).then(function (result) {
-		var pl = document.getElementById("dl-"+id);
-		if (result) {
+		if(result.isConfirmed){
+			var pl = document.getElementById("dl-"+id);
 			ipcRenderer.invoke('download-ps', id, place).then((result) => {
-				if(result == true){
 					pl.remove();
-				}
-				
+					
 			});
+			
 		}
 	});
 }
