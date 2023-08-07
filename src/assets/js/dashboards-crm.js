@@ -486,11 +486,11 @@
         formatter: function (val) {
           return val + 'k';
         },
-        offsetY: -25,
+        offsetY: -20,
         style: {
           fontSize: '15px',
           colors: [legendColor],
-          fontWeight: '600',
+          fontWeight: '500',
           fontFamily: 'Public Sans'
         }
       },
@@ -526,7 +526,7 @@
         labels: {
           offsetX: -15,
           formatter: function (val) {
-            return '$' + parseInt(val / 1) + 'k';
+            return parseInt(val / 1) + 'k';
           },
           style: {
             fontSize: '13px',

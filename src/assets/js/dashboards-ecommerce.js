@@ -64,7 +64,7 @@
             value: {
               fontSize: '22px',
               color: headingColor,
-              fontWeight: 600,
+              fontWeight: 500,
               offsetY: -5
             }
           }
@@ -354,7 +354,7 @@
                 fontSize: '1.375rem',
                 fontFamily: 'Public Sans',
                 color: headingColor,
-                fontWeight: 600,
+                fontWeight: 500,
                 offsetY: -15,
                 formatter: function (val) {
                   return parseInt(val) + '%';
@@ -427,7 +427,7 @@
         }
       ],
       chart: {
-        height: 365,
+        height: 413,
         parentHeightOffset: 0,
         stacked: true,
         type: 'bar',
@@ -440,7 +440,7 @@
         bar: {
           horizontal: false,
           columnWidth: '40%',
-          borderRadius: 10,
+          borderRadius: 9,
           startingShape: 'rounded',
           endingShape: 'rounded'
         }
@@ -457,7 +457,7 @@
       },
       legend: {
         show: true,
-        horizontalAlign: 'left',
+        horizontalAlign: 'right',
         position: 'top',
         fontFamily: 'Public Sans',
         markers: {
@@ -471,7 +471,8 @@
           colors: legendColor
         },
         itemMargin: {
-          horizontal: 5
+          horizontal: 10,
+          vertical: 2
         }
       },
       grid: {
@@ -526,11 +527,11 @@
           options: {
             plotOptions: {
               bar: {
-                columnWidth: '52%'
+                columnWidth: '50%'
               }
             },
             chart: {
-              height: 375
+              height: 422
             }
           }
         },
@@ -539,7 +540,7 @@
           options: {
             plotOptions: {
               bar: {
-                columnWidth: '62%'
+                columnWidth: '50%'
               }
             }
           }
@@ -549,7 +550,7 @@
           options: {
             plotOptions: {
               bar: {
-                columnWidth: '70%'
+                columnWidth: '50%'
               }
             },
             chart: {
@@ -572,7 +573,7 @@
           options: {
             plotOptions: {
               bar: {
-                columnWidth: '48%'
+                columnWidth: '50%'
               }
             }
           }
@@ -582,7 +583,7 @@
           options: {
             plotOptions: {
               bar: {
-                columnWidth: '70%'
+                columnWidth: '73%'
               }
             },
             chart: {
@@ -591,6 +592,15 @@
             xaxis: {
               labels: {
                 offsetY: -5
+              }
+            },
+            legend: {
+              show: true,
+              horizontalAlign: 'right',
+              position: 'top',
+              itemMargin: {
+                horizontal: 10,
+                vertical: 0
               }
             }
           }
@@ -601,6 +611,19 @@
             plotOptions: {
               bar: {
                 columnWidth: '88%'
+              }
+            },
+            legend: {
+              show: true,
+              horizontalAlign: 'center',
+              position: 'bottom',
+              markers: {
+                offsetX: -3,
+                offsetY: 0
+              },
+              itemMargin: {
+                horizontal: 10,
+                vertical: 5
               }
             }
           }
@@ -840,9 +863,9 @@
             return (
               "<span data-bs-toggle='tooltip' data-bs-html='true' title='<span>" +
               $invoice_status +
-              '<br> <strong>Balance:</strong> ' +
+              '<br> <span class="fw-medium">Balance:</span> ' +
               $balance +
-              '<br> <strong>Due Date:</strong> ' +
+              '<br> <span class="fw-medium">Due Date:</span> ' +
               $due_date +
               "</span>'>" +
               roleBadgeObj[$invoice_status] +
@@ -868,7 +891,15 @@
               '<div class="d-flex align-items-center">' +
               '<a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="Send Mail"><i class="ti ti-mail me-2 ti-sm"></i></a>' +
               '<a href="app-invoice-preview.html" class="text-body" data-bs-toggle="tooltip" title="Preview"><i class="ti ti-eye mx-2 ti-sm"></i></a>' +
-              '<a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="Download"><i class="ti ti-dots-vertical mx-1 ti-sm"></i></a>' +
+              '<div class="d-inline-block">' +
+              '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm lh-1"></i></a>' +
+              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a href="javascript:;" class="dropdown-item">Details</a>' +
+              '<a href="javascript:;" class="dropdown-item">Archive</a>' +
+              '<div class="dropdown-divider"></div>' +
+              '<a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>' +
+              '</div>' +
+              '</div>' +
               '</div>'
             );
           }
@@ -879,15 +910,15 @@
           visible: false
         }
       ],
-      order: [[1, 'desc']],
+      order: [[1, 'asc']],
       dom:
         '<"row ms-2 me-3"' +
         '<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>>' +
         '<"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-2"f<"invoice_status mb-3 mb-md-0">>' +
         '>t' +
-        '<"row mx-2"' +
+        '<"row d-flex align-items-center mx-2"' +
         '<"col-sm-12 col-md-6"i>' +
-        '<"col-sm-12 col-md-6"p>' +
+        '<"col-sm-12 col-md-6 mt-1"p>' +
         '>',
       displayLength: 7,
       lengthMenu: [7, 10, 25, 50, 75, 100],

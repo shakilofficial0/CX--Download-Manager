@@ -21,7 +21,7 @@ $shepherd-container-width: 15rem !default;
     .shepherd-header {
       padding: $shepherd-header-content-padding-y $shepherd-header-content-padding-x 0;
       .shepherd-title {
-        font-weight: light.$font-weight-semibold !important;
+        font-weight: light.$font-weight-medium !important;
         font-size: light.$h5-font-size !important;
       }
 

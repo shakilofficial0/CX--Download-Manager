@@ -236,7 +236,7 @@
               offsetY: 10,
               color: headingColor,
               fontSize: '38px',
-              fontWeight: '600',
+              fontWeight: '500',
               fontFamily: 'Public Sans'
             }
           }
@@ -538,7 +538,7 @@
               '</div>' +
               '</div>' +
               '<div class="d-flex flex-column">' +
-              '<span class="text-truncate fw-semibold">' +
+              '<span class="text-truncate fw-medium">' +
               $name +
               '</span>' +
               '<small class="text-truncate text-muted">' +

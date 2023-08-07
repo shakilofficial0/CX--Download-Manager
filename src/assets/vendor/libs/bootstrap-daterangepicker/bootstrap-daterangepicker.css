@@ -24,7 +24,7 @@
 .daterangepicker table thead th select,
 .daterangepicker table thead td select {
   background-color: transparent;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 html:not([dir=rtl]) .daterangepicker .drp-calendar:not(.single).left .prev {
@@ -310,10 +310,10 @@ html:not([dir=rtl]) .daterangepicker .drp-calendar.right {
 .light-style .daterangepicker .calendar-table thead tr:last-child th {
   border-radius: 0 !important;
   font-size: 0.8125rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 .light-style .daterangepicker th.month {
-  font-weight: 600;
+  font-weight: 500;
 }
 .light-style .daterangepicker td.week,
 .light-style .daterangepicker th.week {
@@ -354,6 +354,9 @@ html:not([dir=rtl]) .daterangepicker .drp-calendar.right {
   font-size: 0.75rem;
   color: #6f6b7d;
   border: 1px solid transparent;
+}
+.light-style .daterangepicker select.hourselect option, .light-style .daterangepicker select.minuteselect option, .light-style .daterangepicker select.secondselect option, .light-style .daterangepicker select.ampmselect option {
+  background: #fff;
 }
 .light-style .daterangepicker select.monthselect option, .light-style .daterangepicker select.yearselect option {
   color: #6f6b7d;
@@ -432,10 +435,10 @@ html:not([dir=rtl]) .daterangepicker .drp-calendar.right {
 .dark-style .daterangepicker .calendar-table thead tr:last-child th {
   border-radius: 0 !important;
   font-size: 0.8125rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 .dark-style .daterangepicker th.month {
-  font-weight: 600;
+  font-weight: 500;
 }
 .dark-style .daterangepicker td.week,
 .dark-style .daterangepicker th.week {
@@ -472,10 +475,13 @@ html:not([dir=rtl]) .daterangepicker .drp-calendar.right {
   color: #cfd3ec;
 }
 .dark-style .daterangepicker select.hourselect, .dark-style .daterangepicker select.minuteselect, .dark-style .daterangepicker select.secondselect, .dark-style .daterangepicker select.ampmselect {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(134, 146, 208, 0.12);
   border: 1px solid transparent;
   font-size: 0.75rem;
   color: #b6bee3;
+}
+.dark-style .daterangepicker select.hourselect option, .dark-style .daterangepicker select.minuteselect option, .dark-style .daterangepicker select.secondselect option, .dark-style .daterangepicker select.ampmselect option {
+  background: #2f3349;
 }
 .dark-style .daterangepicker select.monthselect option, .dark-style .daterangepicker select.yearselect option {
   color: #b6bee3;

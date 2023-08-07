@@ -67,9 +67,9 @@ $(function () {
             return (
               "<span data-bs-toggle='tooltip' data-bs-html='true' title='<span>" +
               $invoice_status +
-              '<br> <strong>Balance:</strong> ' +
+              '<br> <span class="fw-medium">Balance:</span> ' +
               $balance +
-              '<br> <strong>Due Date:</strong> ' +
+              '<br> <span class="fw-medium">Due Date:</span> ' +
               $due_date +
               "</span>'>" +
               roleBadgeObj[$invoice_status] +
@@ -105,12 +105,12 @@ $(function () {
             var $row_output =
               '<div class="d-flex justify-content-start align-items-center">' +
               '<div class="avatar-wrapper">' +
-              '<div class="avatar avatar-sm me-2">' +
+              '<div class="avatar me-2">' +
               $output +
               '</div>' +
               '</div>' +
               '<div class="d-flex flex-column">' +
-              '<a href="pages-profile-user.html" class="text-body text-truncate"><span class="fw-semibold">' +
+              '<a href="pages-profile-user.html" class="text-body text-truncate"><span class="fw-medium">' +
               $name +
               '</span></a>' +
               '<small class="text-truncate text-muted">' +

@@ -15,6 +15,10 @@ if (document.getElementById('layout-menu')) {
 }
 
 (function () {
+  setTimeout(function () {
+    window.Helpers.initCustomOptionCheck();
+  }, 1000);
+
   if (typeof Waves !== 'undefined') {
     Waves.init();
     Waves.attach(".btn[class*='btn-']:not([class*='btn-outline-']):not([class*='btn-label-'])", ['waves-light']);
@@ -56,6 +60,12 @@ if (document.getElementById('layout-menu')) {
             'templateCustomizer-' + templateName + '--LayoutCollapsed',
             String(window.Helpers.isCollapsed())
           );
+          // Update customizer checkbox state on click of menu toggler
+          let layoutCollapsedCustomizerOptions = document.querySelector('.template-customizer-layouts-options');
+          if (layoutCollapsedCustomizerOptions) {
+            let layoutCollapsedVal = window.Helpers.isCollapsed() ? 'collapsed' : 'expanded';
+            layoutCollapsedCustomizerOptions.querySelector(`input[value="${layoutCollapsedVal}"]`).click();
+          }
         } catch (e) {}
       }
     });
@@ -86,53 +96,72 @@ if (document.getElementById('layout-menu')) {
     });
   }
 
-  // Style Switcher (Light/Dark Mode)
-  //---------------------------------
-
-  let styleSwitcherToggleEl = document.querySelector('.style-switcher-toggle');
-  if (window.templateCustomizer) {
-    // setStyle light/dark on click of styleSwitcherToggleEl
-    if (styleSwitcherToggleEl) {
-      styleSwitcherToggleEl.addEventListener('click', function () {
-        if (window.Helpers.isLightStyle()) {
-          window.templateCustomizer.setStyle('dark');
-        } else {
-          window.templateCustomizer.setStyle('light');
-        }
-      });
-    }
-    // Update style switcher icon and tooltip based on current style
-    if (window.Helpers.isLightStyle()) {
-      if (styleSwitcherToggleEl) {
-        styleSwitcherToggleEl.querySelector('i').classList.add('ti-moon-stars');
-        new bootstrap.Tooltip(styleSwitcherToggleEl, {
-          title: 'Dark mode',
-          fallbackPlacements: ['bottom']
-        });
-      }
-      switchImage('light');
-    } else {
-      if (styleSwitcherToggleEl) {
-        styleSwitcherToggleEl.querySelector('i').classList.add('ti-sun');
-        new bootstrap.Tooltip(styleSwitcherToggleEl, {
-          title: 'Light mode',
-          fallbackPlacements: ['bottom']
-        });
-      }
-      switchImage('dark');
-    }
-  } else {
-    // Removed style switcher element if not using template customizer
-    styleSwitcherToggleEl.parentElement.remove();
-  }
-
   // Update light/dark image based on current style
   function switchImage(style) {
+    if (style === 'system') {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        style = 'dark';
+      } else {
+        style = 'light';
+      }
+    }
     const switchImagesList = [].slice.call(document.querySelectorAll('[data-app-' + style + '-img]'));
     switchImagesList.map(function (imageEl) {
       const setImage = imageEl.getAttribute('data-app-' + style + '-img');
       imageEl.src = assetsPath + 'img/' + setImage; // Using window.assetsPath to get the exact relative path
     });
+  }
+
+  //Style Switcher (Light/Dark/System Mode)
+  let styleSwitcher = document.querySelector('.dropdown-style-switcher');
+
+  // Set style on click of style switcher item if template customizer is enabled
+  if (window.templateCustomizer && styleSwitcher) {
+    // Get style from local storage or use 'system' as default
+    let storedStyle =
+      localStorage.getItem('templateCustomizer-' + templateName + '--Style') ||
+      window.templateCustomizer.settings.defaultStyle;
+
+    let styleSwitcherItems = [].slice.call(styleSwitcher.children[1].querySelectorAll('.dropdown-item'));
+    styleSwitcherItems.forEach(function (item) {
+      item.addEventListener('click', function () {
+        let currentStyle = this.getAttribute('data-theme');
+        if (currentStyle === 'light') {
+          window.templateCustomizer.setStyle('light');
+        } else if (currentStyle === 'dark') {
+          window.templateCustomizer.setStyle('dark');
+        } else {
+          window.templateCustomizer.setStyle('system');
+        }
+      });
+    });
+
+    // Update style switcher icon based on the stored style
+
+    const styleSwitcherIcon = styleSwitcher.querySelector('i');
+
+    if (storedStyle === 'light') {
+      styleSwitcherIcon.classList.add('ti-sun');
+      new bootstrap.Tooltip(styleSwitcherIcon, {
+        title: 'Light Mode',
+        fallbackPlacements: ['bottom']
+      });
+    } else if (storedStyle === 'dark') {
+      styleSwitcherIcon.classList.add('ti-moon');
+      new bootstrap.Tooltip(styleSwitcherIcon, {
+        title: 'Dark Mode',
+        fallbackPlacements: ['bottom']
+      });
+    } else {
+      styleSwitcherIcon.classList.add('ti-device-desktop');
+      new bootstrap.Tooltip(styleSwitcherIcon, {
+        title: 'System Mode',
+        fallbackPlacements: ['bottom']
+      });
+    }
+
+    // Run switchImage function based on the stored style
+    switchImage(storedStyle);
   }
 
   // Internationalization (Language Dropdown)
@@ -162,15 +191,12 @@ if (document.getElementById('layout-menu')) {
 
     for (let i = 0; i < dropdownItems.length; i++) {
       dropdownItems[i].addEventListener('click', function () {
-        let currentLanguage = this.getAttribute('data-language'),
-          selectedLangFlag = this.querySelector('.fi').getAttribute('class');
+        let currentLanguage = this.getAttribute('data-language');
 
         for (let sibling of this.parentNode.children) {
           sibling.classList.remove('selected');
         }
         this.classList.add('selected');
-
-        languageDropdown[0].querySelector('.dropdown-toggle .fi').className = selectedLangFlag;
 
         i18next.changeLanguage(currentLanguage, (err, t) => {
           if (err) return console.log('something went wrong loading', err);
@@ -249,9 +275,9 @@ if (document.getElementById('layout-menu')) {
   });
 
   // If layout is RTL add .dropdown-menu-end class to .dropdown-menu
-  if (isRtl) {
-    Helpers._addClass('dropdown-menu-end', document.querySelectorAll('#layout-navbar .dropdown-menu'));
-  }
+  // if (isRtl) {
+  //   Helpers._addClass('dropdown-menu-end', document.querySelectorAll('#layout-navbar .dropdown-menu'));
+  // }
 
   // Auto update layout based on screen size
   window.Helpers.setAutoUpdate(true);
@@ -371,12 +397,19 @@ if (typeof $ !== 'undefined') {
         }
       }
     });
-    // Todo: Add container-xxl to twitter-typeahead
-    searchInput.on('focus', function () {
-      if (searchInputWrapper.hasClass('container-xxl')) {
-        searchInputWrapper.find('.twitter-typeahead').addClass('container-xxl');
-      }
-    });
+    // Note: Following code is required to update container class of typeahead dropdown width on focus of search input. setTimeout is required to allow time to initiate Typeahead UI.
+    setTimeout(function () {
+      var twitterTypeahead = $('.twitter-typeahead');
+      searchInput.on('focus', function () {
+        if (searchInputWrapper.hasClass('container-xxl')) {
+          searchInputWrapper.find(twitterTypeahead).addClass('container-xxl');
+          twitterTypeahead.removeClass('container-fluid');
+        } else if (searchInputWrapper.hasClass('container-fluid')) {
+          searchInputWrapper.find(twitterTypeahead).addClass('container-fluid');
+          twitterTypeahead.removeClass('container-xxl');
+        }
+      });
+    }, 10);
 
     if (searchInput.length) {
       // Filter config

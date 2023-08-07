@@ -316,7 +316,7 @@ $noUiSlider-tick-label-font-size: 0.6875rem !default;
     .noUi-tooltip {
       color: light.$headings-color;
       background: light.rgba-to-hex(rgba(light.$black, 0.16), light.$rgba-to-hex-bg);
-      font-weight: light.$font-weight-semibold;
+      font-weight: light.$font-weight-medium;
     }
 
     @each $color, $value in light.$theme-colors {
@@ -366,7 +366,7 @@ $noUiSlider-tick-label-font-size: 0.6875rem !default;
     .noUi-tooltip {
       color: dark.$headings-color;
       background: rgba(dark.$base, 0.16);
-      font-weight: dark.$font-weight-semibold;
+      font-weight: dark.$font-weight-medium;
     }
 
     @each $color, $value in dark.$theme-colors {

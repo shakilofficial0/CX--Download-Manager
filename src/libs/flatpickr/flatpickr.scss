@@ -284,7 +284,7 @@ $flatpickr-width: ($flatpickr-cell-size * 7)+ ($flatpickr-content-padding-x * 2)
   top: 1.15rem;
   display: inline-block;
   text-align: left;
-  font-weight: 600;
+  font-weight: light.$font-weight-medium;
   display: flex;
   align-items: center;
   line-height: 1;
@@ -299,7 +299,7 @@ $flatpickr-width: ($flatpickr-cell-size * 7)+ ($flatpickr-content-padding-x * 2)
     padding: 0 0 0 0.5ch;
     outline: none;
     vertical-align: middle !important;
-    font-weight: 600;
+    font-weight: light.$font-weight-medium;
     font-size: inherit;
     font-family: inherit;
     line-height: inherit;
@@ -507,10 +507,6 @@ span.flatpickr-weekday {
       border-bottom-right-radius: 0;
     }
   }
-}
-
-.rangeMode .flatpickr-day {
-  margin-top: 1px;
 }
 
 .flatpickr-weekwrapper {
@@ -769,7 +765,7 @@ span.flatpickr-weekday {
     }
 
     span.flatpickr-weekday {
-      font-weight: light.$font-weight-semibold;
+      font-weight: light.$font-weight-medium;
       font-size: light.$small-font-size;
       background: light.$dropdown-bg;
       color: light.$headings-color;
@@ -842,6 +838,16 @@ span.flatpickr-weekday {
 
       input {
         color: light.$body-color;
+        font-size: light.$font-size-base;
+
+        &.flatpickr-hour {
+          font-weight: light.$font-weight-medium;
+        }
+
+        &.flatpickr-minute,
+        &.flatpickr-second {
+          font-weight: light.$font-weight-medium;
+        }
       }
 
       .numInputWrapper span {
@@ -860,6 +866,7 @@ span.flatpickr-weekday {
 
       .flatpickr-time-separator {
         color: light.$body-color;
+        font-weight: light.$font-weight-medium;
       }
     }
   }
@@ -951,7 +958,7 @@ span.flatpickr-weekday {
     }
 
     span.flatpickr-weekday {
-      font-weight: dark.$font-weight-semibold;
+      font-weight: dark.$font-weight-medium;
       font-size: dark.$small-font-size;
       background: dark.$dropdown-bg;
       color: dark.$headings-color;
@@ -959,6 +966,7 @@ span.flatpickr-weekday {
 
     .flatpickr-day {
       color: dark.$body-color;
+      font-weight: dark.$font-weight-medium;
       @include dark.border-radius(50rem);
 
       &:hover,
@@ -1019,6 +1027,15 @@ span.flatpickr-weekday {
 
       input {
         color: dark.$body-color;
+
+        &.flatpickr-hour {
+          font-weight: dark.$font-weight-medium;
+        }
+
+        &.flatpickr-minute,
+        &.flatpickr-second {
+          font-weight: dark.$font-weight-medium;
+        }
       }
 
       .numInputWrapper span {
@@ -1037,6 +1054,7 @@ span.flatpickr-weekday {
 
       .flatpickr-time-separator {
         color: dark.$body-color;
+        font-weight: dark.$font-weight-medium;
       }
     }
   }

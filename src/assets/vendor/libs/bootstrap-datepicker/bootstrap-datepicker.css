@@ -89,7 +89,7 @@ html:not([dir=rtl]) .datepicker .datepicker-centuries .prev {
 }
 .datepicker .datepicker-switch {
   vertical-align: middle;
-  font-weight: 600;
+  font-weight: 500;
   position: relative;
 }
 html:not([dir=rtl]) .datepicker .datepicker-switch {
@@ -157,7 +157,7 @@ html:not([dir=rtl]) .datepicker .datepicker-centuries .datepicker-switch {
 }
 .datepicker table tr td.dow,
 .datepicker table tr th.dow {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.8125rem;
 }
 

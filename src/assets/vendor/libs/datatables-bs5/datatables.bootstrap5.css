@@ -498,7 +498,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 .dataTable .emp_name {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .dataTable td .btn {
@@ -576,8 +576,8 @@ table.dataTable {
   text-align: right;
 }
 table.dataTable .form-check-input {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
 }
 
 .dataTables_scroll {
@@ -674,11 +674,10 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-link {
-  padding: 0.594rem 0.35rem;
+  padding: 0.745rem;
   min-width: calc(
-    1.938rem + 0px
+    2.38155rem + 0px
   );
-  font-size: 0.75rem;
   line-height: 1;
 }
 div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-link div:not(.table-responsive) div.dataTables_wrapper .dataTables_paginate {

@@ -604,7 +604,7 @@
             value: {
               fontSize: '22px',
               color: headingColor,
-              fontWeight: 600,
+              fontWeight: 500,
               offsetY: -5
             }
           }
@@ -1552,7 +1552,7 @@
                 fontSize: '1.375rem',
                 fontFamily: 'Public Sans',
                 color: headingColor,
-                fontWeight: 600,
+                fontWeight: 500,
                 offsetY: -15,
                 formatter: function (val) {
                   return parseInt(val) + '%';

@@ -20,6 +20,21 @@
     borderColor = config.colors.borderColor;
   }
 
+  // Chart Colors
+  const chartColors = {
+    donut: {
+      series1: config.colors.success,
+      series2: '#4fddaa',
+      series3: '#8ae8c7',
+      series4: '#c4f4e3'
+    },
+    bar: {
+      series1: config.colors.primary,
+      series2: '#7367F0CC',
+      series3: '#7367f099'
+    }
+  };
+
   // Earning Reports Bar Chart
   // --------------------------------------------------------------------
   const weeklyEarningReportsEl = document.querySelector('#weeklyEarningReports'),
@@ -145,7 +160,7 @@
               offsetY: 10,
               color: headingColor,
               fontSize: '38px',
-              fontWeight: '600',
+              fontWeight: '500',
               fontFamily: 'Public Sans'
             }
           }
@@ -224,7 +239,7 @@
         }
       ],
       chart: {
-        height: 306,
+        height: 300,
         type: 'radar',
         toolbar: {
           show: false
@@ -295,10 +310,18 @@
       },
       responsive: [
         {
+          breakpoint: 1025,
+          options: {
+            chart: {
+              height: 290
+            }
+          }
+        },
+        {
           breakpoint: 769,
           options: {
             chart: {
-              height: 400
+              height: 390
             }
           }
         }
@@ -324,7 +347,7 @@
         }
       ],
       chart: {
-        height: 350,
+        height: 390,
         parentHeightOffset: 0,
         stacked: true,
         type: 'bar',
@@ -354,7 +377,7 @@
       },
       legend: {
         show: true,
-        horizontalAlign: 'left',
+        horizontalAlign: 'right',
         position: 'top',
         fontFamily: 'Public Sans',
         markers: {
@@ -368,7 +391,8 @@
           colors: legendColor
         },
         itemMargin: {
-          horizontal: 5
+          horizontal: 10,
+          vertical: 2
         }
       },
       grid: {
@@ -470,6 +494,15 @@
               labels: {
                 offsetY: -5
               }
+            },
+            legend: {
+              show: true,
+              horizontalAlign: 'right',
+              position: 'top',
+              itemMargin: {
+                horizontal: 10,
+                vertical: 0
+              }
             }
           }
         },
@@ -479,6 +512,19 @@
             plotOptions: {
               bar: {
                 columnWidth: '88%'
+              }
+            },
+            legend: {
+              show: true,
+              horizontalAlign: 'center',
+              position: 'bottom',
+              markers: {
+                offsetX: -3,
+                offsetY: 0
+              },
+              itemMargin: {
+                horizontal: 10,
+                vertical: 5
               }
             }
           }
@@ -663,7 +709,7 @@
         bar: {
           columnWidth: '32%',
           startingShape: 'rounded',
-          borderRadius: 7,
+          borderRadius: 4,
           distributed: true,
           dataLabels: {
             position: 'top'
@@ -685,11 +731,11 @@
         formatter: function (val) {
           return val + 'k';
         },
-        offsetY: -25,
+        offsetY: -20,
         style: {
           fontSize: '15px',
           colors: [legendColor],
-          fontWeight: '600',
+          fontWeight: '500',
           fontFamily: 'Public Sans'
         }
       },
@@ -725,7 +771,7 @@
         labels: {
           offsetX: -15,
           formatter: function (val) {
-            return '$' + parseInt(val / 1) + 'k';
+            return parseInt(val / 1) + 'k';
           },
           style: {
             fontSize: '13px',
@@ -848,7 +894,7 @@
         }
       ],
       chart: {
-        height: 225,
+        height: 215,
         parentHeightOffset: 0,
         stacked: true,
         type: 'bar',
@@ -863,8 +909,8 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '18%',
-          borderRadius: 5,
+          columnWidth: '15%',
+          borderRadius: 4,
           startingShape: 'rounded',
           endingShape: 'rounded'
         }
@@ -913,7 +959,7 @@
           breakpoint: 1197,
           options: {
             chart: {
-              height: 228
+              height: 212
             },
             plotOptions: {
               bar: {
@@ -927,7 +973,7 @@
           breakpoint: 783,
           options: {
             chart: {
-              height: 232
+              height: 210
             },
             plotOptions: {
               bar: {
@@ -996,5 +1042,382 @@
   if (typeof totalEarningChartEl !== undefined && totalEarningChartEl !== null) {
     const totalEarningChart = new ApexCharts(totalEarningChartEl, totalEarningChartOptions);
     totalEarningChart.render();
+  }
+
+  //Intersted Topics Chart
+
+  const horizontalBarChartEl = document.querySelector('#horizontalBarChart'),
+    horizontalBarChartConfig = {
+      chart: {
+        height: 360,
+        type: 'bar',
+        toolbar: {
+          show: false
+        }
+      },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          barHeight: '60%',
+          distributed: true,
+          startingShape: 'rounded',
+          borderRadius: 7
+        }
+      },
+      grid: {
+        strokeDashArray: 10,
+        borderColor: borderColor,
+        xaxis: {
+          lines: {
+            show: true
+          }
+        },
+        yaxis: {
+          lines: {
+            show: false
+          }
+        },
+        padding: {
+          top: -35,
+          bottom: -12
+        }
+      },
+
+      colors: [
+        config.colors.primary,
+        config.colors.info,
+        config.colors.success,
+        config.colors.secondary,
+        config.colors.danger,
+        config.colors.warning
+      ],
+      dataLabels: {
+        enabled: true,
+        style: {
+          colors: ['#fff'],
+          fontWeight: 200,
+          fontSize: '13px',
+          fontFamily: 'Public Sans'
+        },
+        formatter: function (val, opts) {
+          return horizontalBarChartConfig.labels[opts.dataPointIndex];
+        },
+        offsetX: 0,
+        dropShadow: {
+          enabled: false
+        }
+      },
+      labels: ['UI Design', 'UX Design', 'Music', 'Animation', 'React', 'SEO'],
+      series: [
+        {
+          data: [35, 20, 14, 12, 10, 9]
+        }
+      ],
+
+      xaxis: {
+        categories: ['6', '5', '4', '3', '2', '1'],
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        },
+        labels: {
+          style: {
+            colors: labelColor,
+            fontSize: '13px'
+          },
+          formatter: function (val) {
+            return `${val}%`;
+          }
+        }
+      },
+      yaxis: {
+        max: 35,
+        labels: {
+          style: {
+            colors: [labelColor],
+            fontFamily: 'Public Sans',
+            fontSize: '13px'
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        style: {
+          fontSize: '12px'
+        },
+        onDatasetHover: {
+          highlightDataSeries: false
+        },
+        custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+          return '<div class="px-3 py-2">' + '<span>' + series[seriesIndex][dataPointIndex] + '%</span>' + '</div>';
+        }
+      },
+      legend: {
+        show: false
+      }
+    };
+  if (typeof horizontalBarChartEl !== undefined && horizontalBarChartEl !== null) {
+    const horizontalBarChart = new ApexCharts(horizontalBarChartEl, horizontalBarChartConfig);
+    horizontalBarChart.render();
+  }
+
+  const carrierPerformance = document.querySelector('#carrierPerformance'),
+    carrierPerformanceChartConfig = {
+      chart: {
+        height: 275,
+        type: 'bar',
+        parentHeightOffset: 0,
+        stacked: false,
+        toolbar: {
+          show: false
+        },
+        zoom: {
+          enabled: false
+        }
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          startingShape: 'rounded',
+          endingShape: 'flat',
+          borderRadius: 4
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      series: [
+        {
+          name: 'Delivery rate',
+          type: 'column',
+          data: [5, 4.5, 4, 3]
+        },
+        {
+          name: 'Delivery time',
+          type: 'column',
+          data: [4, 3.5, 3, 2.5]
+        },
+        {
+          name: 'Delivery exceptions',
+          type: 'column',
+          data: [3.5, 3, 2.5, 2]
+        }
+      ],
+      xaxis: {
+        tickAmount: 10,
+        categories: ['Carrier A', 'Carrier B', 'Carrier C', 'Carrier D'],
+        labels: {
+          style: {
+            colors: labelColor,
+            fontSize: '13px',
+            fontFamily: 'Public Sans',
+            fontWeight: 400
+          }
+        },
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        }
+      },
+      yaxis: {
+        tickAmount: 4,
+        min: 1,
+        max: 5,
+        labels: {
+          style: {
+            colors: labelColor,
+            fontSize: '13px',
+            fontFamily: 'Public Sans',
+            fontWeight: 400
+          },
+          formatter: function (val) {
+            return val;
+          }
+        }
+      },
+      legend: {
+        show: true,
+        position: 'bottom',
+        markers: {
+          width: 8,
+          height: 8,
+          offsetX: -3,
+          radius: 12
+        },
+        height: 40,
+        offsetY: 0,
+        itemMargin: {
+          horizontal: 10,
+          vertical: 0
+        },
+        fontSize: '13px',
+        fontFamily: 'Public Sans',
+        fontWeight: 400,
+        labels: {
+          colors: headingColor,
+          useSeriesColors: false
+        },
+        offsetY: 10
+      },
+      grid: {
+        strokeDashArray: 6,
+        padding: {
+          bottom: 5
+        }
+      },
+      colors: [chartColors.bar.series1, chartColors.bar.series2, chartColors.bar.series3],
+      fill: {
+        opacity: 1
+      },
+      responsive: [
+        {
+          breakpoint: 1400,
+          options: {
+            chart: {
+              height: 275
+            },
+            legend: {
+              fontSize: '13px',
+              offsetY: 10
+            }
+          }
+        },
+        {
+          breakpoint: 576,
+          options: {
+            chart: {
+              height: 300
+            },
+            legend: {
+              itemMargin: {
+                vertical: 5,
+                horizontal: 10
+              },
+              offsetY: 7
+            }
+          }
+        }
+      ]
+    };
+  if (typeof carrierPerformance !== undefined && carrierPerformance !== null) {
+    const carrierPerformanceChart = new ApexCharts(carrierPerformance, carrierPerformanceChartConfig);
+    carrierPerformanceChart.render();
+  }
+
+  // Reasons for delivery exceptions Chart
+  // --------------------------------------------------------------------
+  const deliveryExceptionsChartE1 = document.querySelector('#deliveryExceptionsChart'),
+    deliveryExceptionsChartConfig = {
+      chart: {
+        height: 400,
+        parentHeightOffset: 0,
+        type: 'donut'
+      },
+      labels: ['Incorrect address', 'Weather conditions', 'Federal Holidays', 'Damage during transit'],
+      series: [13, 25, 22, 40],
+      colors: [
+        chartColors.donut.series1,
+        chartColors.donut.series2,
+        chartColors.donut.series3,
+        chartColors.donut.series4
+      ],
+      stroke: {
+        width: 0
+      },
+      dataLabels: {
+        enabled: false,
+        formatter: function (val, opt) {
+          return parseInt(val) + '%';
+        }
+      },
+      legend: {
+        show: true,
+        position: 'bottom',
+        offsetY: 10,
+        markers: {
+          width: 8,
+          height: 8,
+          offsetX: -3
+        },
+        itemMargin: {
+          horizontal: 15,
+          vertical: 5
+        },
+        fontSize: '13px',
+        fontFamily: 'Public Sans',
+        fontWeight: 400,
+        labels: {
+          colors: headingColor,
+          useSeriesColors: false
+        }
+      },
+      tooltip: {
+        theme: false
+      },
+      grid: {
+        padding: {
+          top: 15
+        }
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '75%',
+            labels: {
+              show: true,
+              value: {
+                fontSize: '26px',
+                fontFamily: 'Public Sans',
+                color: headingColor,
+                fontWeight: 500,
+                offsetY: -30,
+                formatter: function (val) {
+                  return parseInt(val) + '%';
+                }
+              },
+              name: {
+                offsetY: 20,
+                fontFamily: 'Public Sans'
+              },
+              total: {
+                show: true,
+                fontSize: '0.9rem',
+                label: 'AVG. Exceptions',
+                color: labelColor,
+                formatter: function (w) {
+                  return '30%';
+                }
+              }
+            }
+          }
+        }
+      },
+      responsive: [
+        {
+          breakpoint: 1025,
+          options: {
+            chart: {
+              height: 380
+            }
+          }
+        },
+        {
+          breakpoint: 420,
+          options: {
+            chart: {
+              height: 300
+            }
+          }
+        }
+      ]
+    };
+  if (typeof deliveryExceptionsChartE1 !== undefined && deliveryExceptionsChartE1 !== null) {
+    const deliveryExceptionsChart = new ApexCharts(deliveryExceptionsChartE1, deliveryExceptionsChartConfig);
+    deliveryExceptionsChart.render();
   }
 })();

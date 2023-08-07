@@ -81,7 +81,7 @@
   if (htmlAlert) {
     htmlAlert.onclick = function () {
       Swal.fire({
-        title: '<strong>HTML <u>example</u></strong>',
+        title: '<span class="fw-medium">HTML <u>example</u></span>',
         icon: 'info',
         html:
           'You can use <b>bold text</b>, ' +
@@ -361,7 +361,7 @@
       var timerInterval;
       Swal.fire({
         title: 'Auto close alert!',
-        html: 'I will close in <strong></strong> seconds.',
+        html: 'I will close in <span class="fw-medium"></span> seconds.',
         timer: 2000,
         customClass: {
           confirmButton: 'btn btn-primary'

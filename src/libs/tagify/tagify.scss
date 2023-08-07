@@ -30,7 +30,7 @@ $tag-bg: rgb(light.$text-light, 0.5) !default;
   &.form-control {
     padding: 0 $tag-spacer $tag-spacer $tag-spacer + 0.125rem;
     font-size: light.$small-font-size;
-    font-weight: light.$font-weight-semibold;
+    font-weight: light.$font-weight-medium;
   }
   &__tag,
   &__input {
@@ -68,6 +68,12 @@ $tag-bg: rgb(light.$text-light, 0.5) !default;
   &__input {
     padding: 0;
   }
+}
+
+.tagify__dropdown__wrapper,
+.tagify__dropdown {
+  border: none;
+  border-radius: light.$border-radius;
 }
 
 //RTL

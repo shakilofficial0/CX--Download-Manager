@@ -529,6 +529,9 @@
 .tagify__dropdown.users-list {
   font-size: 1rem;
 }
+.tagify__dropdown.users-list .addAll {
+  display: block !important;
+}
 .tagify__dropdown.users-list .tagify__dropdown__item {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -702,7 +705,7 @@
 .tagify.form-control {
   padding: 0 0.375rem 0.375rem 0.5rem;
   font-size: 0.8125rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 .tagify__tag, .tagify__input {
   margin: 0.375rem 0.375rem 0 0 !important;
@@ -733,6 +736,12 @@
 }
 .tagify__input {
   padding: 0;
+}
+
+.tagify__dropdown__wrapper,
+.tagify__dropdown {
+  border: none;
+  border-radius: 0.375rem;
 }
 
 [dir=rtl] .tagify__tag, [dir=rtl] .tagify__input {

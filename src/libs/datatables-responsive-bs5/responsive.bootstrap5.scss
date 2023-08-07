@@ -7,7 +7,7 @@
 table.dataTable.dtr-column > tbody > tr > td.control:before,
 table.dataTable.dtr-column > tbody > tr > th.control:before {
   line-height: 0.9em;
-  font-weight: bold;
+  font-weight: light.$font-weight-medium;
 }
 
 // To scroll within datatable area
@@ -30,7 +30,7 @@ table.dataTable.dtr-column > tbody > tr > th.control:before {
       box-shadow: none !important;
     }
     .emp_name {
-      font-weight: light.$font-weight-semibold;
+      font-weight: light.$font-weight-medium;
     }
   }
 }

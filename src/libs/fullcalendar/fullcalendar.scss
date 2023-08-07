@@ -6,7 +6,7 @@
 $fullcalendar-event-padding-y: 0.216rem !default;
 $fullcalendar-event-padding-x: 0.5rem !default;
 $fullcalendar-event-font-size: light.$small-font-size !default;
-$fullcalendar-event-font-weight: light.$font-weight-semibold !default;
+$fullcalendar-event-font-weight: light.$font-weight-medium !default;
 $fullcalendar-toolbar-btn-padding: light.$input-btn-padding-y - 0.115 light.$input-btn-padding-x !default;
 $fullcalendar-fc-popover-z-index: 1090 !default;
 $fullcalendar-event-border-radius: 3px !default;
@@ -104,6 +104,11 @@ $fullcalendar-event-border-radius: 3px !default;
     }
   }
 
+  // To fix firefox thead border issue
+  .fc-day-today {
+    background-clip: padding-box;
+  }
+
   //! Fix: white color issue of event text
   .fc-h-event .fc-event-main,
   .fc-v-event .fc-event-main {
@@ -135,6 +140,9 @@ $fullcalendar-event-border-radius: 3px !default;
       font-weight: $fullcalendar-event-font-weight;
       padding: $fullcalendar-event-padding-y $fullcalendar-event-padding-x;
       border: 0;
+      .fc-event-title {
+        font-weight: light.$font-weight-medium;
+      }
     }
     .fc-daygrid-event-harness {
       // ! week & day events are using this style for all day only, not for other events

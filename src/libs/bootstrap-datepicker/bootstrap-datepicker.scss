@@ -115,7 +115,7 @@ $white: #fff;
   // switch default styles
   .datepicker-switch {
     vertical-align: middle;
-    font-weight: 600;
+    font-weight: 500;
     position: relative;
     @include app-ltr {
       text-align: left;
@@ -203,7 +203,7 @@ $white: #fff;
   border: none;
 
   &.dow {
-    font-weight: light.$font-weight-semibold;
+    font-weight: light.$font-weight-medium;
     font-size: light.$small-font-size;
   }
 }

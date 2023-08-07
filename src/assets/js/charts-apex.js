@@ -857,12 +857,12 @@
           dataLabels: {
             name: {
               fontSize: '2rem',
-              fontFamily: 'Open Sans'
+              fontFamily: 'Public Sans'
             },
             value: {
               fontSize: '1.2rem',
               color: legendColor,
-              fontFamily: 'Open Sans'
+              fontFamily: 'Public Sans'
             },
             total: {
               show: true,
@@ -958,7 +958,7 @@
           style: {
             colors: [labelColor, labelColor, labelColor, labelColor, labelColor, labelColor, labelColor, labelColor],
             fontSize: '13px',
-            fontFamily: 'Open Sans'
+            fontFamily: 'Public Sans'
           }
         }
       },
@@ -1031,12 +1031,12 @@
               show: true,
               name: {
                 fontSize: '2rem',
-                fontFamily: 'Open Sans'
+                fontFamily: 'Public Sans'
               },
               value: {
                 fontSize: '1.2rem',
                 color: legendColor,
-                fontFamily: 'Open Sans',
+                fontFamily: 'Public Sans',
                 formatter: function (val) {
                   return parseInt(val, 10) + '%';
                 }

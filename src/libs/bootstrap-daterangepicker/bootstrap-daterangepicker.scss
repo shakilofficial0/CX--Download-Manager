@@ -47,7 +47,7 @@ $daterangepicker-width-with-weeks: $daterangepicker-width + $daterangepicker-cel
     td {
       select {
         background-color: transparent;
-        font-weight: light.$font-weight-semibold;
+        font-weight: light.$font-weight-medium;
       }
     }
   }
@@ -405,11 +405,11 @@ $daterangepicker-width-with-weeks: $daterangepicker-width + $daterangepicker-cel
     .daterangepicker .calendar-table thead tr:last-child th {
       border-radius: 0 !important;
       font-size: light.$small-font-size;
-      font-weight: light.$font-weight-semibold;
+      font-weight: light.$font-weight-medium;
     }
 
     .daterangepicker th.month {
-      font-weight: light.$font-weight-semibold;
+      font-weight: light.$font-weight-medium;
     }
 
     .daterangepicker td.week,
@@ -459,6 +459,9 @@ $daterangepicker-width-with-weeks: $daterangepicker-width + $daterangepicker-cel
         font-size: light.$font-size-sm;
         color: light.$body-color;
         border: 1px solid transparent;
+        option {
+          background: light.$card-bg;
+        }
       }
 
       // ! FIX: OS Windows and Linux Browsers DD Option color
@@ -575,11 +578,11 @@ $daterangepicker-width-with-weeks: $daterangepicker-width + $daterangepicker-cel
     .daterangepicker .calendar-table thead tr:last-child th {
       border-radius: 0 !important;
       font-size: dark.$small-font-size;
-      font-weight: dark.$font-weight-semibold;
+      font-weight: dark.$font-weight-medium;
     }
 
     .daterangepicker th.month {
-      font-weight: dark.$font-weight-semibold;
+      font-weight: dark.$font-weight-medium;
     }
 
     .daterangepicker td.week,
@@ -625,10 +628,13 @@ $daterangepicker-width-with-weeks: $daterangepicker-width + $daterangepicker-cel
       &.minuteselect,
       &.secondselect,
       &.ampmselect {
-        background: dark.$gray-100;
+        background: rgba(dark.$base, 0.12);
         border: 1px solid transparent;
         font-size: dark.$font-size-sm;
         color: dark.$body-color;
+        option {
+          background: dark.$card-bg;
+        }
       }
 
       // ! FIX: OS Windows and Linux Browsers DD Option color

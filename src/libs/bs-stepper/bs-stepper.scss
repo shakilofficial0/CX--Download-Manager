@@ -35,6 +35,7 @@ $bs-stepper-vertical-header-min-width: 18rem !default;
         padding: 0 $bs-stepper-trigger-padding;
         flex-wrap: nowrap;
         gap: 1rem;
+        font-weight: light.$font-weight-medium;
         .bs-stepper-label {
           margin: 0;
           max-width: $bs-stepper-label-max-width;
@@ -42,10 +43,11 @@ $bs-stepper-vertical-header-min-width: 18rem !default;
           text-overflow: ellipsis;
           text-align: start;
           display: inline-grid;
-          font-weight: light.$font-weight-semibold;
+          font-weight: light.$font-weight-medium;
           font-size: light.$font-size-base;
           .bs-stepper-title {
             line-height: 1;
+            font-weight: light.$font-weight-medium;
           }
           .bs-stepper-subtitle {
             font-size: light.$small-font-size;
@@ -86,7 +88,7 @@ $bs-stepper-vertical-header-min-width: 18rem !default;
         width: 2.5rem;
         height: 2.5rem;
         font-size: light.$h5-font-size;
-        font-weight: light.$font-weight-semibold;
+        font-weight: light.$font-weight-medium;
       }
     }
   }

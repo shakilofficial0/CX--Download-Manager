@@ -56,6 +56,116 @@
       "url": "app-kanban.html"
     },
     {
+      "name": "eCommerce - Product",
+      "icon": "ti-building-factory-2",
+      "url": "app-ecommerce-product-list.html"
+    },
+    {
+      "name": "eCommerce - Product List",
+      "icon": "ti-list-details",
+      "url": "app-ecommerce-product-list.html"
+    },
+    {
+      "name": "eCommerce - Add Product",
+      "icon": "ti-plus",
+      "url": "app-ecommerce-product-add.html"
+    },
+    {
+      "name": "eCommerce - Category List",
+      "icon": "ti-list",
+      "url": "app-ecommerce-category-list.html"
+    },
+    {
+      "name": "eCommerce - Order List",
+      "icon": "ti-list",
+      "url": "app-ecommerce-order-list.html"
+    },
+    {
+      "name": "eCommerce - Orders Details",
+      "icon": "ti-list-check",
+      "url": "app-ecommerce-order-details.html"
+    },
+    {
+      "name": "eCommerce - Customers",
+      "icon": "ti-user",
+      "url": "app-ecommerce-customer-all.html"
+    },
+    {
+      "name": "eCommerce - Customers Overview",
+      "icon": "ti-list-details",
+      "url": "app-ecommerce-customer-details-overview.html"
+    },
+    {
+      "name": "eCommerce - Customers Security",
+      "icon": "ti-home-shield",
+      "url": "app-ecommerce-customer-details-security.html"
+    },
+    {
+      "name": "eCommerce - Customers Address and Billing",
+      "icon": "ti-map-pin",
+      "url": "app-ecommerce-customer-details-billing.html"
+    },
+    {
+      "name": "eCommerce - Customers Notifications",
+      "icon": "ti-bell",
+      "url": "app-ecommerce-customer-details-notifications.html"
+    },
+    {
+      "name": "eCommerce - Manage Reviews",
+      "icon": "ti-quote",
+      "url": "app-ecommerce-manage-reviews.html"
+    },
+    {
+      "name": "eCommerce - Referrals",
+      "icon": "ti-building-factory-2",
+      "url": "app-ecommerce-referral.html"
+    },
+    {
+      "name": "eCommerce - Settings Store Details",
+      "icon": "ti-building-store",
+      "url": "app-ecommerce-settings-detail.html"
+    },
+    {
+      "name": "eCommerce - Settings Store Payments",
+      "icon": "ti-currency-dollar",
+      "url": "app-ecommerce-settings-payments.html"
+    },
+    {
+      "name": "eCommerce - Settings Store Checkout",
+      "icon": "ti-shopping-cart",
+      "url": "app-ecommerce-settings-checkout.html"
+    },
+    {
+      "name": "eCommerce - Settings Shipping & Delivery",
+      "icon": "ti-truck",
+      "url": "app-ecommerce-settings-shipping.html"
+    },
+    {
+      "name": "eCommerce - Settings Locations",
+      "icon": "ti-map-pin",
+      "url": "app-ecommerce-settings-locations.html"
+    },
+    {
+      "name": "eCommerce - Settings Notifications",
+      "icon": "ti-bell-ringing",
+      "url": "app-ecommerce-settings-notifications.html"
+    },
+    {
+      "name": "Academy - Overview",
+      "icon": "ti-book",
+      "url": "app-academy-overview.html"
+    },
+    {
+      "name": "Academy - My Course",
+      "icon": "ti-list",
+      "url": "app-academy-course.html"
+    },
+    {
+      "name": "Academy - Course Details",
+      "icon": "ti-list",
+      "url": "app-academy-course-details.html"
+    },
+    {
       "name": "User List",
       "icon": "ti-list-numbers",
       "url": "app-user-list.html"
@@ -94,6 +204,16 @@
       "name": "Permission",
       "icon": "ti-ban",
       "url": "app-access-permission.html"
+    },
+    {
+      "name": "Logistics Overview",
+      "icon": "ti-truck",
+      "url": "app-Logistics-overview.html"
+    },
+    {
+      "name": "Logistics Fleet",
+      "icon": "ti-car",
+      "url": "app-logistics-fleet.html"
     },
     {
       "name": "Invoice List",
@@ -164,21 +284,6 @@
       "name": "FAQ",
       "icon": "ti-help",
       "url": "pages-faq.html"
-    },
-    {
-      "name": "Help Center Landing",
-      "icon": "ti-lifebuoy",
-      "url": "pages-help-center-landing.html"
-    },
-    {
-      "name": "Help Center Categories",
-      "icon": "ti-lifebuoy",
-      "url": "pages-help-center-categories.html"
-    },
-    {
-      "name": "Help Center Article",
-      "icon": "ti-lifebuoy",
-      "url": "pages-help-center-article.html"
     },
     {
       "name": "Pricing",
@@ -269,6 +374,31 @@
       "name": "Two Steps Verification Cover",
       "icon": "ti-question-mark",
       "url": "auth-two-steps-cover.html"
+    },
+    {
+      "name": "Help Center Front",
+      "icon": "ti-progress-help",
+      "url": "../front-pages/help-center-landing.html"
+    },
+    {
+      "name": "Landing Front",
+      "icon": "ti-files",
+      "url": "../front-pages/landing-page.html"
+    },
+    {
+      "name": "Pricing Front",
+      "icon": "ti-currency-dollar",
+      "url": "../front-pages/pricing-page.html"
+    },
+    {
+      "name": "Checkout Front",
+      "icon": "ti-check",
+      "url": "../front-pages/checkout-page.html"
+    },
+    {
+      "name": "Payment Front",
+      "icon": "ti-credit-card",
+      "url": "../front-pages/payment-page.html"
     },
     {
       "name": "Modal Examples",

@@ -688,8 +688,22 @@ const Helpers = {
   // *******************************************************************************
   // * Setters
 
-  setNavbarFixed(fixed = requiredParam('fixed')) {
-    this[fixed ? '_addClass' : '_removeClass']('layout-navbar-fixed')
+  // setNavbarFixed(fixed = requiredParam('fixed')) {
+  //   this[fixed ? '_addClass' : '_removeClass']('layout-navbar-fixed')
+  //   this.update()
+  // },
+
+  setNavbar(type) {
+    if (type === 'sticky') {
+      this._addClass('layout-navbar-fixed')
+      this._removeClass('layout-navbar-hidden')
+    } else if (type === 'hidden') {
+      this._addClass('layout-navbar-hidden')
+      this._removeClass('layout-navbar-fixed')
+    } else {
+      this._removeClass('layout-navbar-hidden')
+      this._removeClass('layout-navbar-fixed')
+    }
     this.update()
   },
 
@@ -698,8 +712,95 @@ const Helpers = {
     this.update()
   },
 
-  setFlipped(reversed = requiredParam('reversed')) {
-    this[reversed ? '_addClass' : '_removeClass']('layout-menu-flipped')
+  setContentLayout(contentLayout = requiredParam('contentLayout')) {
+    setTimeout(() => {
+      const contentArea = document.querySelector('.content-wrapper > div') // For content area
+      const navbarArea = document.querySelector('.layout-navbar') // For navbar area for vertical menu
+      const navbarAreaHorizontal = document.querySelector('.layout-navbar > div') // For navbar area for horizontal menu
+      const navbarSearchInputWrapper = document.querySelector('.layout-navbar .search-input-wrapper') // For navbar search input wrapper
+      const navbarSearchInput = document.querySelector('.layout-navbar .search-input-wrapper .search-input') // For navbar search input
+      const footerArea = document.querySelector('.content-footer > div') // For footer area
+      const containerFluid = [].slice.call(document.querySelectorAll('.container-fluid')) // To get container-fluid
+      const containerXxl = [].slice.call(document.querySelectorAll('.container-xxl')) // To get container-xxl
+      const verticalMenu = document.querySelector('.menu-vertical')
+      let horizontalMenu = false // For horizontal menu
+      let horizontalMenuArea // For horizontal menu area
+      // Condition to check if layout is horizontal menu
+      if (document.querySelector('.content-wrapper > .menu-horizontal > div')) {
+        horizontalMenu = true
+        horizontalMenuArea = document.querySelector('.content-wrapper > .menu-horizontal > div')
+      }
+      //  If compact mode layout
+      if (contentLayout === 'compact') {
+        // Remove container fluid class from content area and footer area
+        if (containerFluid.some(el => [contentArea, footerArea].includes(el))) {
+          this._removeClass('container-fluid', [contentArea, footerArea])
+          this._addClass('container-xxl', [contentArea, footerArea])
+        }
+        // Navbar search input container condition is separated because it is not in starter kit
+        if (navbarSearchInput) {
+          this._removeClass('container-fluid', [navbarSearchInput])
+          this._addClass('container-xxl', [navbarSearchInput])
+        }
+        // Remove container fluid class from navbar area in vertical menu
+        if (verticalMenu) {
+          if (containerFluid.some(el => [navbarArea].includes(el))) {
+            this._removeClass('container-fluid', [navbarArea])
+            this._addClass('container-xxl', [navbarArea])
+          }
+        }
+        // For horizontal menu only
+        if (horizontalMenu) {
+          this._removeClass('container-fluid', horizontalMenuArea)
+          this._addClass('container-xxl', horizontalMenuArea)
+          // For horizontal navbar only
+          if (navbarAreaHorizontal) {
+            this._removeClass('container-fluid', navbarAreaHorizontal)
+            this._addClass('container-xxl', navbarAreaHorizontal)
+          }
+          // Navbar search input container condition is separated because it is not in starter kit
+          if (navbarSearchInputWrapper) {
+            this._removeClass('container-fluid', navbarSearchInputWrapper)
+            this._addClass('container-xxl', navbarSearchInputWrapper)
+          }
+        }
+      } else {
+        //  If wide mode layout
+
+        // Remove container xxl class from content area and footer area
+        if (containerXxl.some(el => [contentArea, footerArea].includes(el))) {
+          this._removeClass('container-xxl', [contentArea, footerArea])
+          this._addClass('container-fluid', [contentArea, footerArea])
+        }
+        // Navbar search input container condition is separated because it is not in starter kit
+        if (navbarSearchInput) {
+          this._removeClass('container-xxl', [navbarSearchInput])
+          this._addClass('container-fluid', [navbarSearchInput])
+        }
+        // Remove container xxl class from navbar area in vertical menu
+        if (verticalMenu) {
+          if (containerXxl.some(el => [navbarArea].includes(el))) {
+            this._removeClass('container-xxl', [navbarArea])
+            this._addClass('container-fluid', [navbarArea])
+          }
+        }
+        // For horizontal menu only
+        if (horizontalMenu) {
+          this._removeClass('container-xxl', horizontalMenuArea)
+          this._addClass('container-fluid', horizontalMenuArea)
+          // For horizontal navbar only
+          if (navbarAreaHorizontal) {
+            this._removeClass('container-xxl', navbarAreaHorizontal)
+            this._addClass('container-fluid', navbarAreaHorizontal)
+          }
+          // Navbar search input container condition is separated because it is not in starter kit
+          if (navbarSearchInputWrapper) {
+            this._removeClass('container-xxl', navbarSearchInputWrapper)
+            this._addClass('container-fluid', navbarSearchInputWrapper)
+          }
+        }
+      }
+    }, 500)
   },
 
   // *******************************************************************************
@@ -790,10 +891,6 @@ const Helpers = {
 
   isFooterFixed() {
     return this._hasClass('layout-footer-fixed')
-  },
-
-  isFlipped() {
-    return this._hasClass('layout-menu-flipped')
   },
 
   isLightStyle() {

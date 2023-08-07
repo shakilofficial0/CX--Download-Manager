@@ -78,7 +78,7 @@ $select2-multiple-selection-line-height: 1.5rem !default;
 
     .select2-selection__clear {
       cursor: pointer;
-      font-weight: bold;
+      font-weight: light.$font-weight-medium;
       float: right;
       font-size: light.$font-size-xl;
     }
@@ -153,7 +153,7 @@ $select2-multiple-selection-line-height: 1.5rem !default;
 
     .select2-selection__clear {
       cursor: pointer;
-      font-weight: bold;
+      font-weight: light.$font-weight-medium;
       float: right;
       margin-right: 0.625rem;
     }
@@ -170,7 +170,7 @@ $select2-multiple-selection-line-height: 1.5rem !default;
       cursor: default;
       line-height: 0.875;
       float: left;
-      font-weight: light.$font-weight-semibold;
+      font-weight: light.$font-weight-medium;
       color: light.$component-hover-color;
       background-color: rgba(light.$primary, 0.16);
 
@@ -184,6 +184,7 @@ $select2-multiple-selection-line-height: 1.5rem !default;
     }
 
     .select2-selection__choice__remove {
+      font-weight: light.$font-weight-medium;
       color: inherit;
       display: inline-block;
       position: absolute;
@@ -248,7 +249,7 @@ $select2-multiple-selection-line-height: 1.5rem !default;
   }
 
   .select2-results > .select2-results__options {
-    max-height: 12.5rem;
+    max-height: 15rem;
     overflow-y: auto;
   }
 
@@ -276,6 +277,7 @@ $select2-multiple-selection-line-height: 1.5rem !default;
   .select2-results__group {
     cursor: default;
     display: block;
+    font-weight: light.$font-weight-medium;
   }
 }
 
@@ -348,6 +350,9 @@ $select2-multiple-selection-line-height: 1.5rem !default;
         border: 1px solid light.$input-border-color;
 
         @include light.border-radius(light.$border-radius);
+        &:hover {
+          border-color: light.$input-border-hover-color;
+        }
       }
 
       .select2-selection__placeholder {
@@ -556,6 +561,9 @@ $select2-multiple-selection-line-height: 1.5rem !default;
         border: 1px solid dark.$input-border-color;
 
         @include dark.border-radius(dark.$border-radius);
+        &:hover {
+          border-color: dark.$input-border-hover-color;
+        }
       }
 
       .select2-selection__placeholder {

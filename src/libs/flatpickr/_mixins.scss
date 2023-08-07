@@ -5,16 +5,6 @@
   $color: if($color, $color, color-contrast($background));
   $in-range-color: $background;
 
-  .flatpickr-calendar .numInputWrapper span {
-    &.arrowDown:after {
-      border-top-color: $color;
-    }
-
-    &.arrowUp:after {
-      border-bottom-color: $color;
-    }
-  }
-
   .flatpickr-day {
     &.today {
       border-color: $background;
