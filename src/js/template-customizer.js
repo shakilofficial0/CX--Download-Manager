@@ -482,7 +482,7 @@ class TemplateCustomizer {
     // Customizer visibility condition
     //
     const customizerW = this.container
-    if (this.settings.displayCustomizer) customizerW.setAttribute('style', 'visibility: visible')
+    if (this.settings.displayCustomizer) customizerW.setAttribute('style', 'visibility: hidden')
     else customizerW.setAttribute('style', 'visibility: hidden')
 
     // Open btn

@@ -1,6 +1,7 @@
 {
   "name": "cx-plus-download-manager",
   "version": "1.0.0",
+  "v_var":"9.6.1",
   "description": "Simple Fast Download Manager",
   "main": "main.js",
   "scripts": {
