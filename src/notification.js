@@ -11,11 +11,9 @@ var notification_data = JSON.parse(fs.readFileSync(notification_list, 'utf8'));
 var counter =0;
 
 for(var i = 0; i < notification_data.notification.length; i++){
-	console.log(notification_data.notification[i]);
 	if(notification_data.notification[i].read == false){
 		counter+=1;
 	}
-	console.log(notification_data.notification[i].id);
 	notificationMake(notification_data.notification[i]);
 }
 
@@ -117,7 +115,6 @@ setInterval(function(){
 		retries: 2,
 	}).then(function(){
 
-		console.log(notification_data.last_id);
 		var req = request({
 			url: "https://api-server.codebumble.net/cdm-notification",
 			method: "GET",
@@ -133,10 +130,8 @@ setInterval(function(){
 			if (!error && response.statusCode === 200) {
 				
 					var data = body;
-					console.log(data);
 					if(0<data.length){
 						for (var i = 0; i < data.length; i++) {
-							console.log(data[i]);
 							notificationMake(data[i], true);
 							notification_data.last_id = data[i].id;
 							data[i].read = false;

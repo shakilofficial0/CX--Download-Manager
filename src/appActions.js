@@ -9,20 +9,16 @@ const fs = require('fs');
 
 
 closeBtn.addEventListener('click', () => {
-	console.log('closeBtn clicked');
 	ipcRenderer.send('closeApp', 'closeApp');
 }
 );
 
 minBtn.addEventListener('click', () => {
-	console.log('minBtn clicked');
 	ipcRenderer.send('minimizeApp', 'minimizeApp');
 }
 );
 let maximize = false;
 maxBtn.addEventListener('click', () => {
-
-	console.log('maxBtn clicked');
 	if(maximize == false) {
 		maxBtn.innerHTML = '<i class="ti ti-window-minimize me-2 ti-sm"></i><span class="align-middle">Windowed</span>';
 		maximize = true;
@@ -87,7 +83,6 @@ internetAvailable({
 				let latest_version = json.version;
 				// compare versions
 				if (app_version != latest_version) {
-					console.log('Update available');
 					Swal.fire({
 						icon: 'info',
 						title: 'New Update Available!',
@@ -107,7 +102,6 @@ internetAvailable({
 					});			
 
 				} else {
-					console.log('No update available');
 				}
 
 				// update version.json
@@ -129,8 +123,6 @@ internetAvailable({
     console.log("No internet");
 });
 
-} else {
-	console.log('No Need to check for update');
 }
 
 // Create new downloader

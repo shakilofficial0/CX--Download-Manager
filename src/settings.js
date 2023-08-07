@@ -118,7 +118,6 @@ other.addEventListener("click", async () => {
 });
 
 apply_location.addEventListener("click", async () => {
-	console.log("apply location clicked");
 	if(temp.value == "" || general.value == "" || music.value == "" || video.value == "" || image.value == "" || documentt.value == "" || program.value == "" || compressed.value == "" || torrent.value == "" || other.value == "") {
 		swal.fire({
 			icon: 'error',
@@ -160,7 +159,6 @@ r_timeout.value = settings_data.settings.timeout;
 
 
 apply_download.addEventListener("click", async () => {
-	console.log("apply download clicked");
 	if(max_connection.value == "" || max_download.value == "" || user_agent.value == "" || max_retry.value == "" || max_delay.value == "" || r_timeout.value == "") {
 		swal.fire({
 			icon: 'error',
@@ -190,9 +188,8 @@ file_types.value="";
 for(var i = 0; i < settings_data.settings.fileTypes.length; i++) {
 	file_types.value += settings_data.settings.fileTypes[i]+" ";
 }
-console.log(file_types.value);
+
 apply_file_types.addEventListener("click", async () => {
-	console.log("apply file types clicked");
 	if(file_types.value == "") {
 		swal.fire({
 			icon: 'error',

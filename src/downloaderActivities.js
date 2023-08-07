@@ -36,7 +36,6 @@ downloadBtn.addEventListener('click', (event) => {
 	headers = document.getElementById('download-header').value,
 	username = document.getElementById('download-username').value,
 	password = document.getElementById('download-password').value;
-	console.log(utilities.urlToFilename(action_url));
 
 	if(action_url == '' || isUrl(action_url) == false){
 		Swal.fire({
@@ -72,7 +71,6 @@ downloadBtn.addEventListener('click', (event) => {
 		}, function (error, response, body) {
 
 			if (error) {
-				console.log(error);
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops...',
@@ -210,14 +208,12 @@ setInterval(() => {
 					progress.style.width = utilities.humanReadablePercent(result[i].merge_percent) + '%';
 					
 				} else if (result[i].status == 'finished'){
-					console.log('OK');
 					var section = document.getElementById('dl-'+i);
 					if(section.parentElement.id == 'Downloading'){
 						section.remove();
 						createCompleteSection(init);
 					}
 					ipcRenderer.invoke('download-completed', i).then((result) => {
-						console.log(result);
 						if(result != false){
 							var time_taken = document.getElementById('dl-cltd-time-taken-'+i);
 							time_taken.innerHTML = 'Time: '+utilities.humanReadableTime(result);
@@ -390,10 +386,8 @@ function createStoppedSection(arg){
 }
 
 function createDownloadingSection(arg){
-	console.log(arg);
 	var sub_html = '';
 	for (var index in arg) {
-				console.log(arg[index]);
 				sub_html += '<div class="card shadow-none border border-primary mb-3" id="dl-'+index+'">';
 				sub_html +='<div class="card-body">';
 				sub_html +='<div class="card-title header-elements">';
@@ -538,3 +532,92 @@ function deletePS(id, place){
 		}
 	});
 }
+
+
+// Create all completed
+
+var cac = document.getElementById('clear-all-completed');
+
+cac.addEventListener('click', (event) => {
+	Swal.fire({
+		icon: 'warning',
+		title: 'Are you sure?',
+		html: 'You won\'t be able to revert this!',
+		showCancelButton: true,
+		confirmButtonText: 'Delete',
+		customClass: {
+			confirmButton: 'btn btn-primary',
+			cancelButton: 'btn btn-outline-danger ms-2'
+		},
+		buttonsStyling: false
+	}).then(function (result) {
+		if(result.isConfirmed){
+			ipcRenderer.invoke('download-clear-all-completed').then((result) => {
+				if(result == true){
+					var completed_list_html = document.getElementById('Completed');
+					completed_list_html.innerHTML = '';
+				}
+			});
+			
+		}
+	});
+});
+
+// clear full list
+var cfl = document.getElementById('clear-full-list');
+
+cfl.addEventListener('click', (event) => {
+	Swal.fire({
+		icon: 'warning',
+		title: 'Are you sure?',
+		html: 'You won\'t be able to revert this!',
+		showCancelButton: true,
+		confirmButtonText: 'Delete',
+		customClass: {
+			confirmButton: 'btn btn-primary',
+			cancelButton: 'btn btn-outline-danger ms-2'
+		},
+		buttonsStyling: false
+	}).then(function (result) {
+		if(result.isConfirmed){
+			ipcRenderer.invoke('download-clear-full-list').then((result) => {
+				if(result == true){
+					var completed_list_html = document.getElementById('Completed');
+					completed_list_html.innerHTML = '';
+					var paused_list_html = document.getElementById('Paused');
+					paused_list_html.innerHTML = '';
+					var stopped_list_html = document.getElementById('Stopped');
+					stopped_list_html.innerHTML = '';
+				}
+			});
+			
+		}
+	});
+});
+
+// pause all download
+
+var pad = document.getElementById('pause-all-download');
+
+pad.addEventListener('click', (event) => {
+	ipcRenderer.invoke('download-pause-all').then((result) => {
+		if(result == true){
+			document.getElementById('Downloading').innerHTML = '';
+			document.getElementById('Paused').innerHTML = '';
+			var download_list = JSON.parse(fs.readFileSync(download_list_file));
+			createPausedSection(download_list.paused);
+		}
+	});
+});
+
+// resume all download
+var rad = document.getElementById('download-all-paused');
+
+rad.addEventListener('click', (event) => {
+	ipcRenderer.invoke('download-resume-all').then((result) => {
+		if(result == true){
+			document.getElementById('Paused').innerHTML = '';
+			document.getElementById('Stopped').innerHTML = '';
+		}
+	});
+});
