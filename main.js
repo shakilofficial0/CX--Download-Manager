@@ -124,7 +124,7 @@ function createWindow () {
 	frame: false,
 	icon: path.join(__dirname, 'src/assets/img/logo/240px.png'),
 	webPreferences: {			
-	  	devTools: false,
+	  	devTools: true,
 	  	nodeIntegration: true,
 	  	contextIsolation: false
 	}
