@@ -538,6 +538,7 @@ function deletePS(id, place){
 
 var cac = document.getElementById('clear-all-completed');
 
+
 cac.addEventListener('click', (event) => {
 	Swal.fire({
 		icon: 'warning',

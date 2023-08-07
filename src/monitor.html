@@ -330,6 +330,138 @@
               <h2>System Monitor</h2>
               <hr>
               <div class="row">
+                <div class="accordion mt-3">
+                  <div class="card accordion-item">
+                    <h2 class="accordion-header ms-1">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                        General System Information
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show">
+                      <div class="accordion-body">
+                        <!-- LEft -->
+                        <div class="row">
+                          <div class="col-12 col-md-6" style="border-right: 1px solid;">
+                            <div class="d-grid text-center">
+                              <i class="ti ti-cpu text-muted" style="font-size: 10rem;"></i>
+                              <span class="fw-semibold" style="font-size: 1.1rem;">CPU Information</span>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">CPU</span>
+                                <span id="cpuName" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Clock Speed</span>
+                                  <span id="cpuClockSpeed" class="text-primary"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Minimum Clock Speed</span>
+                                <span id="cpuClockSpeedmini" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Maximum Clock Speed</span>
+                                  <span id="cpuClockSpeedmaxi" class="text-primary"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Core</span>
+                                <span id="cpuCore" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Threads</span>
+                                  <span id="cpuThread" class="text-primary"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Model</span>
+                                <span id="cpuModel" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Family</span>
+                                  <span id="cpuFamily" class="text-primary"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3 mb-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Stepping</span>
+                                <span id="cpuStepping" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Virtualization</span>
+                                  <span id="cpuVirtualization" class="text-primary text-capitalize"></span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <!-- Right -->
+                          <div class="col-12 col-md-6" style="border-left: 1px solid;">
+
+                            <div class="d-grid text-center">
+                              <i class="ti ti-affiliate text-muted" style="font-size: 10rem;"></i>
+                              <span class="fw-semibold" style="font-size: 1.1rem;">Motherboard </span>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Brand Name</span>
+                                <span id="mbBrandName" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Model</span>
+                                  <span id="mbModelName" class="text-primary text-capitalize"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Serial</span>
+                                <span id="mbSerial" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Version</span>
+                                  <span id="mbVersion" class="text-primary text-capitalize"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">UUID</span>
+                                <span id="mbUuid" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">SKU</span>
+                                  <span id="mbSku" class="text-primary text-capitalize"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3 mb-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Ram Slot</span>
+                                <span id="mbRamSlot" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Max Ram</span>
+                                  <span id="mbMaxRam" class="text-primary text-capitalize"></span>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 
               </div>
             </div>
@@ -401,11 +533,9 @@
     <script src="./assets/vendor/libs/apex-charts/apex-charts.js"></script>
     <!-- Main JS -->
     <script src="./assets/js/main.js"></script>
-    <script type="module" src="./appActions.js"></script>
-    <!-- <script type="module" src="./downloaderAction.js"></script> -->
-    <script src="./downloaderActivities.js"></script>
-    <script src="./notification.js"></script>
     <script src="./systemMonitor.js"></script>
+    <script src="./notification.js"></script>
+    
 
     <!-- Page JS -->
   </body>
