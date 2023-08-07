@@ -89,7 +89,7 @@ function notificationMake(data, reverse=false){
 	sub_html += '</div>';
 	sub_html += '</div>';
 	sub_html += '<div class="flex-grow-1">';
-	sub_html += '<h6 class="mb-1">'+data.title+'</h6>';
+	sub_html += '<a href="'+data.url+'"><h6 class="mb-1">'+data.title+'</h6></a>';
 	sub_html += '<p class="mb-0">'+data.body+'</p>';
 	sub_html += '<small class="text-muted">'+utilities.timeToAgo(data.time)+'</small>';
 	sub_html += '</div>';
@@ -106,6 +106,20 @@ function notificationMake(data, reverse=false){
 	}
 
 }
+
+var markasreadall = document.getElementById('markasreadall');
+
+markasreadall.addEventListener('click', function(){
+	for (var i = 0; i < notification_data.notification.length; i++) {
+		if(notification_data.notification[i].read == false){
+			notification_data.notification[i].read = true;
+			var element = document.getElementById('nfn-'+notification_data.notification[i].id);
+			element.classList.add('marked-as-read');
+		}
+	}
+	updateNotificationFile(notification_data);
+	countNotification(0);
+});
 
 
 setInterval(function(){

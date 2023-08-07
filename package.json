@@ -82,7 +82,8 @@
   "dependencies": {
     "easydl": "^1.0.3",
     "express": "^4.18.2",
+    "internet-available": "^1.0.0",
     "request": "^2.88.2",
-    "internet-available": "^1.0.0"
+    "systeminformation": "^5.18.12"
   }
 }
