@@ -69,6 +69,12 @@ systemmonitor.baseboard().then(data => {
 
 // System Ended
 
+// OS Started
+
+systemmonitor.osInfo().then(data => {
+	console.log(data);
+});
+
 
 
 
