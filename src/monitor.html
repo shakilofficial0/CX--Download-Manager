@@ -464,18 +464,40 @@
                           <div class="col-12 col-md-6" style="border-right: 1px solid;">
 
                             <div class="d-grid text-center">
-                              <i class="ti text-muted" style="font-size: 10rem;"></i>
+                              <i class="ti text-muted" style="font-size: 10rem;" id="os-image"></i>
                               <span class="fw-semibold" style="font-size: 1.1rem;">OS Information</span>
                             </div>
 
                             <div class="row mt-3 ms-3">
                               <div class="col-6 d-block text-center">
-                                <span class="fw-semibold d-block">CPU</span>
-                                <span id="cpuName" class="text-primary"></span>
+                                <span class="fw-semibold d-block">Name</span>
+                                <span id="osName" class="text-primary"></span>
                               </div>
                               <div class="col-6 d-block text-center">
-                                  <span class="fw-semibold d-block">Clock Speed</span>
-                                  <span id="cpuClockSpeed" class="text-primary"></span>
+                                  <span class="fw-semibold d-block">Codename</span>
+                                  <span id="osCodename" class="text-primary"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Version</span>
+                                <span id="osVersion" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">Arch</span>
+                                  <span id="osArch" class="text-primary"></span>
+                              </div>
+                            </div>
+
+                            <div class="row mt-3 ms-3">
+                              <div class="col-6 d-block text-center">
+                                <span class="fw-semibold d-block">Kernel</span>
+                                <span id="osKernel" class="text-primary"></span>
+                              </div>
+                              <div class="col-6 d-block text-center">
+                                  <span class="fw-semibold d-block">UEFI</span>
+                                  <span id="osUEFI" class="text-primary text-capitalize"></span>
                               </div>
                             </div>
 
@@ -559,6 +581,7 @@
     <script src="./assets/vendor/libs/apex-charts/apex-charts.js"></script>
     <!-- Main JS -->
     <script src="./assets/js/main.js"></script>
+    <script src="./appActions.js"></script>
     <script src="./systemMonitor.js"></script>
     <script src="./notification.js"></script>
     

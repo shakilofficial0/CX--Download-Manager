@@ -1,10 +1,7 @@
-const path = require('path');
+
 const systemmonitor = require('systeminformation');
-const fs = require('fs');
 const utilities = require('./utilities.js');
-const { shell,ipcRenderer } = require('electron');
 const request = require('request');
-const { sys } = require('typescript');
 
 // Cpu Started
 var cpu_name = document.getElementById('cpuName');
@@ -70,9 +67,37 @@ systemmonitor.baseboard().then(data => {
 // System Ended
 
 // OS Started
-
+var osName = document.getElementById('osName');
+var osCodename = document.getElementById('osCodename');
+var osVersion = document.getElementById('osVersion');
+var osArch = document.getElementById('osArch');
+var osKernel = document.getElementById('osKernel');
+var osUEFI = document.getElementById('osUEFI');
 systemmonitor.osInfo().then(data => {
 	console.log(data);
+	for(var i in data){
+		if (data[i] == "Default string") {
+			data[i] = '-----';
+		}
+	}
+	osName.innerHTML = data.distro;
+	osCodename.innerHTML = data.codename+' '+data.build;
+	osVersion.innerHTML = data.release;
+	osArch.innerHTML = data.arch;
+	osKernel.innerHTML = data.platform+' '+data.kernel;
+	osUEFI.innerHTML = data.uefi;
+
+	if(data.platform == 'Windows'){
+		document.getElementById('os-image').classList.add('ti-brand-windows');
+	}else if(data.platform == 'linux'){
+		document.getElementById('os-image').classList.add('ti-brand-ubuntu');
+	}else if(data.platform == 'Darwin'){
+		document.getElementById('os-image').classList.add('ti-brand-apple');
+	}else{
+		document.getElementById('os-image').classList.add('ti-brand-windows');
+	}
+
+
 });
 
 

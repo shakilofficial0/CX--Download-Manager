@@ -3,6 +3,7 @@ const path = require('path');
 const utilities = require('./utilities.js');
 const { shell,ipcRenderer } = require('electron');
 const request = require('request');
+const os = require('os');
 
 
 
@@ -15,7 +16,19 @@ createPausedSection(download_list.paused);
 createCompleteSection(download_list.completed);
 createStoppedSection(download_list.stopped);
 
+var download_location = document.getElementById('download-location');
+download_location.value = path.join(os.homedir(), 'Downloads');
+download_location.addEventListener('click', (event) => {
+	ipcRenderer.invoke('download-location', 'download-location').then((result) => {
+		if(result != false) {
+			document.getElementById('download-location').value = result;
+		}
+	}
+	);
 
+	
+}
+);
 
 document.getElementById('download-header').value = '{"headers": { "User-Agent": "CX+ Download Manager/1.0.0", "accept": "*/*", "accept-enconding": "*", "accept-language": "en-US,en;q=0.9", "cache-control": "no-cache", "pragma": "no-cache", "dnt": "1"}}';
 

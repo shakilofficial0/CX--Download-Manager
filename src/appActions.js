@@ -37,19 +37,7 @@ $(document).on('click', 'a[href^="http"]', function(event) {
 });
 
 
-var download_location = document.getElementById('download-location');
-download_location.value = path.join(os.homedir(), 'Downloads');
-download_location.addEventListener('click', (event) => {
-	ipcRenderer.invoke('download-location', 'download-location').then((result) => {
-		if(result != false) {
-			document.getElementById('download-location').value = result;
-		}
-	}
-	);
 
-	
-}
-);
 
 // updater code
 
