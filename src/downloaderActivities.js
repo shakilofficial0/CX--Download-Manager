@@ -326,7 +326,7 @@ function createCompleteSection(arg){
 				}
 				sub_html +='</div>';
 				sub_html +='<div class="d-flex">';
-				sub_html +='<span class="d-block text-truncate">Link: <span class="text-primary">'+arg[arg_keys[i]].url+'</span></span>';	
+				sub_html +='<span class="d-block text-truncate" style="cursor: pointer;">Link: <span class="text-primary" onclick="copy(\''+arg[arg_keys[i]].url+'\')">'+arg[arg_keys[i]].url+'</span></span> <span style="cursor: pointer;" onclick="copy(\''+arg[arg_keys[i]].url+'\')"><i class="ti ti-link"></i></span>';	
 				sub_html +='</div>';
 				sub_html +='</div>';
 				sub_html +='<div class="col-12"><span class="text-end d-block" style="font-size: 0.7rem; letter-spacing: 0.13rem;">'+month[a.getMonth()]+' '+a.getDate()+', '+a.getFullYear()+'  '+a.getHours()+':'+a.getMinutes()+'</span></div>';
@@ -622,3 +622,30 @@ rad.addEventListener('click', (event) => {
 		}
 	});
 });
+
+function copy(that){
+	var text_to_copy = that;
+
+
+	if (!navigator.clipboard){
+		var copyTextarea = document.createElement("textarea");
+		copyTextarea.style.position = "fixed";
+		copyTextarea.style.opacity = "0";
+		copyTextarea.textContent = text_to_copy;
+	
+		document.body.appendChild(copyTextarea);
+		copyTextarea.select();
+		document.execCommand("copy");
+		document.body.removeChild(copyTextarea);
+		console.log("Success: "+that) // success
+	} else{
+		navigator.clipboard.writeText(text_to_copy).then(
+			function(){
+				console.log("Success: "+that) // success 
+			})
+		.catch(
+			function() {
+				alert("err"); // error
+		});
+	}   
+}

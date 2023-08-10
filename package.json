@@ -44,7 +44,7 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "deleteAppDataOnUninstall": true,
-      "runAfterFinish": true,
+      "runAfterFinish": false,
       "include": "a.nsh",
       "artifactName": "${name}-installer.${ext}",
       "uninstallDisplayName": "${productName}",
@@ -61,20 +61,24 @@
     ],
     "extraFiles": [
       {
-        "from": "native-action.json",
-        "to": "native-action.json"
+        "from": "native-action-c.json",
+        "to": "native-action-c.json"
       },
       {
         "from": "open.bat",
         "to": "open.bat"
+      },
+      {
+        "from": "native-action-f.json",
+        "to": "native-action-f.json"
       }
     ]
   },
   "author": "Codebumble Inc",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^25.3.0",
-    "electron-builder": "^24.4.0",
+    "electron": "^25.5.0",
+    "electron-builder": "^24.6.3",
     "electron-download-tf": "^4.3.4",
     "internet-available": "^1.0.0",
     "ts-node": "^10.9.1",
@@ -85,6 +89,8 @@
     "express": "^4.18.2",
     "internet-available": "^1.0.0",
     "request": "^2.88.2",
-    "systeminformation": "^5.18.12"
+    "systeminformation": "^5.18.12",
+    "typescript": "^5.1.6",
+    "ts-node": "^10.9.1"
   }
 }

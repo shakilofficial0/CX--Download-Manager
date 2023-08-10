@@ -1,0 +1,12 @@
+{
+	"name": "com.codebumble.cyberxplusdownloadmanager",
+	"displayName": "CyberX+ Download Manager",
+	"description": "Simple Fast Download Manager",
+	"path": "open.bat",
+	"type": "stdio",
+	"publisher": "Codebumble Inc",
+	"version": "1.0.0",
+	"allowed_origins": [
+		"3457c1840144552eafc3a85c364244c77d60a226@temporary-addon"
+	]
+}
